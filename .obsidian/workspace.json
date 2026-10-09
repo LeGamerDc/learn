@@ -1,0 +1,229 @@
+{
+  "main": {
+    "id": "2bc68282c33b955a",
+    "type": "split",
+    "children": [
+      {
+        "id": "5250acc96bba8736",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f30a5fcdd57035dc",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "strategy-design/06-reading-opponents.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "06-reading-opponents"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5e1c71a5cb375005",
+    "type": "split",
+    "children": [
+      {
+        "id": "99265ad81fb1aa18",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a1b2dce92725da23",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "8893b6a78f815a48",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "d74c86f69d27f585",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "c8aea1a824fd97e7",
+    "type": "split",
+    "children": [
+      {
+        "id": "26c47183b8f4444c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6469d95bf329bbc6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "rust-borrowck/02-rust-design-history.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "9523763131d62bff",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "rust-borrowck/02-rust-design-history.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "7c11ed094f9c1e7b",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "6915e6ddd7080b89",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "d9279f217658583e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "rust-borrowck/02-rust-design-history.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "f30a5fcdd57035dc",
+  "lastOpenFiles": [
+    "strategy-design/zz-test.md",
+    "strategy-design/evidence/appC/integrated.py",
+    "strategy-design/evidence/appC/c24_draw.py",
+    "strategy-design/evidence/appC/c11_bid.py",
+    "strategy-design/evidence/README.md",
+    "strategy-design/evidence/ch31/lab/run.txt",
+    "strategy-design/evidence/ch31/lab/verify.py",
+    "strategy-design/evidence/ch31/sim.py",
+    "strategy-design/evidence/ch31/seatmech.py",
+    "strategy-design/evidence/ch31/seatdiag.py",
+    "strategy-design/evidence/ch31/positions.py",
+    "strategy-design/evidence/ch31/pos313.py",
+    "strategy-design/review.md",
+    "strategy-design/05-action-economy.md",
+    "strategy-design/B-glossary.md",
+    "strategy-design/A-toolkit.md",
+    "strategy-design/04-evaluation.md",
+    "strategy-design/03-game-trees.md",
+    "strategy-design/02-four-questions.md",
+    "strategy-design/01-what-is-strategy-game.md",
+    "strategy-design/31-end-to-end-lab.md",
+    "strategy-design/00-how-to-learn.md",
+    "rust-borrowck/00-rust-in-30min.md",
+    "rust-borrowck/01-memory-safety-history.md",
+    "rust-borrowck/02-rust-design-history.md",
+    "rust-borrowck/C-exercises.md",
+    "rust-borrowck/B-glossary.md",
+    "rust-borrowck/A-error-codes.md",
+    "rust-borrowck/27-limits-and-comparison.md",
+    "rust-borrowck/26-unsafe-aliasing.md",
+    "rust-borrowck/25-async-pitfalls.md",
+    "rust-borrowck/24-async-borrowing.md",
+    "rust-borrowck/23-concurrency.md",
+    "rust-borrowck/22-send-sync.md",
+    "rust-borrowck/21-api-design.md"
+  ]
+}
