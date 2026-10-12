@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "strategy-design/06-reading-opponents.md",
+                "file": "slg-defeat-psychology/02-player-typology.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "06-reading-opponents"
+              "title": "02-player-typology"
             }
           }
         ]
@@ -190,6 +190,13 @@
   },
   "active": "f30a5fcdd57035dc",
   "lastOpenFiles": [
+    "sites/player-defeat-support/dist/index.html",
+    "sites/player-defeat-support/dist",
+    "sites/player-defeat-support",
+    "sites",
+    "slg-defeat-psychology/player-defeat-support.html",
+    "slg-defeat-psychology/01-failure-psychology.md",
+    "strategy-design/06-reading-opponents.md",
     "strategy-design/zz-test.md",
     "strategy-design/evidence/appC/integrated.py",
     "strategy-design/evidence/appC/c24_draw.py",
@@ -198,10 +205,6 @@
     "strategy-design/evidence/ch31/lab/run.txt",
     "strategy-design/evidence/ch31/lab/verify.py",
     "strategy-design/evidence/ch31/sim.py",
-    "strategy-design/evidence/ch31/seatmech.py",
-    "strategy-design/evidence/ch31/seatdiag.py",
-    "strategy-design/evidence/ch31/positions.py",
-    "strategy-design/evidence/ch31/pos313.py",
     "strategy-design/review.md",
     "strategy-design/05-action-economy.md",
     "strategy-design/B-glossary.md",
@@ -222,8 +225,6 @@
     "rust-borrowck/26-unsafe-aliasing.md",
     "rust-borrowck/25-async-pitfalls.md",
     "rust-borrowck/24-async-borrowing.md",
-    "rust-borrowck/23-concurrency.md",
-    "rust-borrowck/22-send-sync.md",
-    "rust-borrowck/21-api-design.md"
+    "rust-borrowck/23-concurrency.md"
   ]
 }

@@ -1,0 +1,1291 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>玩家失败心理支撑建设</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: 作战简报。冷灰纸面 + 墨蓝正文 + 钴蓝行动色；单列长读，五章：感受 → 分类 → 推演 → 感知 → 支撑 */
+:root{
+  --paper:#EDF0F3; --surface:#F9FAFB; --sunk:#E2E6EB;
+  --ink:#16202C; --ink-2:#4B5665; --ink-3:#77818D; --rule:#C9D0D8;
+  --accent:#2445A6; --accent-ink:#FFFFFF; --accent-soft:#DCE3F6;
+  --ev-a:#1D7354; --ev-b:#94650E; --ev-c:#6A737E;
+  --hi:#B3261E; --hi-soft:#F6DEDC; --mid:#A86A12; --mid-soft:#F5E8D2; --lo:#2B7A55; --lo-soft:#DAEDE3;
+  --f-display:"Noto Serif SC","Songti SC","STSong",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#11151B; --surface:#192029; --sunk:#0C1015;
+  --ink:#E5E9EE; --ink-2:#A6B0BC; --ink-3:#7C8693; --rule:#2C3541;
+  --accent:#8FA9F6; --accent-ink:#0E1630; --accent-soft:#1E2A47;
+  --ev-a:#5BC499; --ev-b:#E2B45C; --ev-c:#9AA3AE;
+  --hi:#F0807A; --hi-soft:#3A1E1E; --mid:#E5AC4F; --mid-soft:#36291A; --lo:#6CC79A; --lo-soft:#173226;
+  color-scheme:dark;
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.75;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3}
+h2{font-size:clamp(26px,3.4vw,36px);font-weight:900;letter-spacing:.01em}
+h3{font-size:19px;font-weight:700}
+p{margin:0}
+.prose{max-width:68ch}
+.muted{color:var(--ink-2)}
+.small{font-size:13.5px}
+.code{font-family:var(--f-mono);font-weight:700;font-size:.82em;letter-spacing:.02em}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+
+.ev{display:inline-grid;place-items:center;width:1.45em;height:1.45em;border-radius:3px;font-family:var(--f-mono);font-weight:700;font-size:11px;line-height:1;vertical-align:.12em;margin-inline:2px;border:1.5px solid currentColor;font-style:normal}
+.ev.a{color:var(--ev-a)} .ev.b{color:var(--ev-b)} .ev.c{color:var(--ev-c);border-style:dashed}
+
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--rule)}
+@supports (backdrop-filter:blur(8px)){.bar{background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px)}}
+.bar .wrap{display:flex;align-items:center;gap:18px;height:52px}
+.bar .brand{font-family:var(--f-display);font-weight:900;font-size:15px;white-space:nowrap}
+.bar nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;min-width:0}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav a{white-space:nowrap;text-decoration:none;color:var(--ink-2);font-size:13.5px;padding:5px 10px;border-radius:999px}
+.bar nav a:hover{background:var(--sunk);color:var(--ink)}
+.bar nav a .code{color:var(--ink-3);margin-right:4px}
+
+.hero{padding-block:60px 44px;position:relative;overflow:hidden;border-bottom:1px solid var(--rule)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background:repeating-radial-gradient(circle at 82% 30%, transparent 0 34px, var(--rule) 34px 35px);
+  -webkit-mask-image:linear-gradient(90deg,transparent 35%,#000 85%);mask-image:linear-gradient(90deg,transparent 35%,#000 85%)}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(38px,6.6vw,70px);font-weight:900;line-height:1.15;margin-top:14px}
+.hero .lede{margin-top:22px;font-size:17px;max-width:44em;color:var(--ink-2)}
+.route{margin-top:30px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.route a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:12px 14px;min-width:0}
+.route a:hover{border-color:var(--accent)}
+.route .code{color:var(--accent);font-size:12px}
+.route b{display:block;font-size:14.5px;margin-top:2px}
+.route span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.5;margin-top:3px}
+
+section.ch{padding-block:72px 16px}
+.ch-head{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:end;margin-bottom:26px}
+.ch-num{font-family:var(--f-mono);font-weight:700;font-size:13px;color:var(--accent);border:1.5px solid var(--accent);border-radius:4px;padding:2px 7px;align-self:center}
+.ch-head .q{grid-column:2;color:var(--ink-2);font-size:15px}
+.block{margin-top:44px}
+.block.first{margin-top:0}
+.block > h3{margin-bottom:6px}
+.block > .sub{color:var(--ink-2);font-size:14.5px;margin-bottom:16px;max-width:70ch}
+.callout{background:var(--accent-soft);border-radius:10px;padding:16px 20px;font-size:14.5px}
+.callout b{color:var(--ink)}
+.simnote{border:1.5px dashed var(--ink-3);border-radius:10px;padding:12px 16px;font-size:13.5px;color:var(--ink-2)}
+
+/* vignettes */
+.scene{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px 22px}
+.scene-head{font-size:13.5px;color:var(--ink-2);padding-bottom:14px;border-bottom:1px dashed var(--rule);margin-bottom:16px}
+.vig{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,230px),1fr));gap:10px}
+.vig > div{background:var(--paper);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.vig .who{font-size:12px;color:var(--ink-3)}
+.vig q{font-family:var(--f-display);font-weight:700;font-size:17px;quotes:"“" "”";line-height:1.45}
+.vig .silent{font-family:var(--f-body);font-weight:400;font-style:italic;font-size:14px;color:var(--ink-2)}
+.vig .feel{font-size:13px;color:var(--ink-2);margin-top:auto}
+.vig .feel .code{color:var(--accent);margin-right:4px}
+
+/* myths */
+.myths{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.myth{background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.myth .gut{padding:11px 16px;font-size:14px;color:var(--ink-2);background:var(--sunk);display:flex;gap:10px}
+.myth .gut::before{content:"直觉";flex:none;font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);padding-top:2px}
+.myth .fact{padding:12px 16px 14px;font-size:14px;display:flex;gap:10px;flex:1}
+.myth .fact::before{content:"研究";flex:none;font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--accent);padding-top:2px}
+.myth .fact b{font-weight:700}
+.myth .src{display:block;font-size:12px;color:var(--ink-3);margin-top:4px}
+
+.qgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.qgrid div{border-top:2px solid var(--ink);padding-top:8px;min-width:0}
+.qgrid b{display:block;font-size:14px}
+.qgrid i{font-style:normal;display:block;font-size:13px;color:var(--ink-2);margin-top:2px}
+.qgrid small{display:block;font-size:12.5px;color:var(--accent);margin-top:6px}
+
+.split{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px;min-width:0}
+.card h4{margin:0 0 6px;font-size:16px}
+.card .tag{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
+.card p{font-size:14px;color:var(--ink-2)}
+.card p + p{margin-top:8px}
+.card .vs{font-size:13.5px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--rule);color:var(--ink)}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.three .big{font-family:var(--f-display);font-size:20px;font-weight:900;color:var(--ink);margin:2px 0 6px}
+
+/* tables */
+.tscroll{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--rule)}
+tr:last-child td{border-bottom:0}
+th{font-weight:700;font-size:12.5px;color:var(--ink-2);background:var(--sunk);white-space:nowrap}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink-3);white-space:nowrap}
+td .code,th .code{color:var(--accent)}
+td.nw{white-space:nowrap}
+.yes{color:var(--lo);font-weight:700}
+.no{color:var(--hi);font-weight:700}
+
+/* spectrum + layers */
+.spectrum{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:18px 20px}
+.spec-axis{display:grid;grid-template-columns:1fr 120px 1fr;gap:14px;align-items:center}
+.spec-axis .line{height:2px;background:linear-gradient(90deg,var(--hi),var(--rule) 50%,var(--mid))}
+.spec-side h4{font-size:15px}
+.spec-side p{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+.spec-side.r{text-align:right}
+.layers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.layers a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:14px 16px;min-width:0}
+.layers a:hover{border-color:var(--accent)}
+.layers .code{color:var(--accent);font-size:13px}
+.layers b{display:block;font-size:15px;margin:2px 0 4px}
+.layers span{font-size:13px;color:var(--ink-2)}
+.inv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.inv .card h4{font-size:16px}
+.inv .card .ax{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+.inv dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13.5px}
+.inv dt{color:var(--ink-3);font-weight:700;font-size:12px;padding-top:2px}
+.inv dd{margin:0}
+.inv .give{color:var(--lo)} .inv .nogive{color:var(--hi)}
+
+/* explorers */
+.picker{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.pk{font:inherit;text-align:left;cursor:pointer;background:var(--surface);color:var(--ink);border:1px solid var(--rule);border-radius:8px;padding:10px 12px;min-width:0}
+.pk:hover{border-color:var(--ink-3)}
+.pk[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.pk .code{display:block;font-size:11.5px;opacity:.75}
+.pk b{display:block;font-size:14.5px;line-height:1.35}
+.pk small{display:block;font-size:11.5px;opacity:.75;margin-top:2px}
+.detail{margin-top:14px;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:22px 24px}
+.d-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.d-head h4{font-size:24px;font-weight:900}
+.d-head .code{color:var(--accent);font-size:14px}
+.d-head .en{color:var(--ink-3);font-size:13.5px;font-style:italic}
+.d-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;margin:16px 0 0}
+.d-grid > div{min-width:0}
+.d-grid .full{grid-column:1/-1}
+.d-grid dt{font-size:12px;letter-spacing:.06em;color:var(--ink-3);font-weight:700}
+.d-grid dd{margin:2px 0 0;font-size:14.5px}
+.d-grid .good dt{color:var(--lo)}
+.d-grid .bad dt{color:var(--hi)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{font:inherit;font-size:13px;cursor:pointer;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:999px;padding:2px 10px;line-height:1.6}
+.chip:hover{border-color:var(--accent);color:var(--accent)}
+.chip .code{color:var(--accent);margin-right:4px}
+.chip.go{border-color:var(--accent);color:var(--accent);font-weight:500}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px}
+.pill.hi{background:var(--hi-soft);color:var(--hi)}
+.pill.mid{background:var(--mid-soft);color:var(--mid)}
+.pill.lo{background:var(--lo-soft);color:var(--lo)}
+.pill.pos{background:var(--accent-soft);color:var(--accent)}
+.quote{font-family:var(--f-display);font-size:18px;font-weight:700}
+.says{font-size:13.5px;color:var(--ink-2)}
+.helpgrid{margin-top:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.helpgrid > div{background:var(--paper);padding:12px 14px;min-width:0;font-size:13.5px}
+.helpgrid > div b{display:block;font-size:12px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:3px}
+.helpgrid .none{color:var(--ink-3)}
+.helpfoot{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:12px 0 0;font-size:13.5px}
+.helpfoot dt{color:var(--ink-3);font-weight:700;font-size:12px;letter-spacing:.06em;padding-top:2px}
+.helpfoot dd{margin:0}
+.helpfoot .x{color:var(--hi)}
+
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.phase{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:12px 12px 14px;min-width:0}
+.phase .ph-t{font-size:13.5px;font-weight:700}
+.phase .ph-w{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3)}
+.phase .list{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.sbtn{font:inherit;font-size:13.5px;cursor:pointer;text-align:left;display:flex;gap:8px;align-items:center;border:1px solid transparent;background:var(--paper);color:var(--ink);border-radius:6px;padding:5px 8px;min-width:0}
+.sbtn:hover{border-color:var(--ink-3)}
+.sbtn .code{color:var(--ink-3);font-size:11.5px;flex:none}
+.sbtn .dot{width:7px;height:7px;border-radius:50%;flex:none;margin-left:auto}
+.sbtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.sbtn[aria-pressed="true"] .code{color:inherit;opacity:.75}
+.sbtn.hl{border-color:var(--accent)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%}
+.dot.hi{background:var(--hi)} .dot.mid{background:var(--mid)} .dot.lo{background:var(--lo)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink-2);margin-top:10px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+
+.aflow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.acol{display:flex;flex-direction:column;gap:6px;min-width:0}
+.acol .ah{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.08em;padding-bottom:4px;border-bottom:1px solid var(--rule);margin-bottom:2px}
+.abtn{font:inherit;cursor:pointer;text-align:left;border:1px solid var(--rule);background:var(--surface);color:var(--ink);border-radius:8px;padding:9px 11px;min-width:0;border-left-width:4px}
+.abtn.hi{border-left-color:var(--hi)} .abtn.mid{border-left-color:var(--mid)} .abtn.lo{border-left-color:var(--lo)}
+.abtn .code{font-size:11.5px;color:var(--ink-3)}
+.abtn b{display:block;font-size:14px}
+.abtn small{display:block;font-size:12px;color:var(--ink-2)}
+.abtn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.abtn[aria-pressed="true"] .code,.abtn[aria-pressed="true"] small{color:inherit;opacity:.8}
+
+/* simulation */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,190px),1fr));gap:8px}
+.cast div{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:9px 12px;font-size:13px;min-width:0}
+.cast b{display:block;font-size:14px}
+.cast .code{color:var(--accent);font-size:11.5px}
+.stage{margin-top:22px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);overflow:hidden}
+.stage-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:14px 20px;border-bottom:1px solid var(--rule);background:var(--sunk)}
+.stage-h .w{font-family:var(--f-mono);font-weight:700;color:var(--accent);font-size:14px}
+.stage-h h4{font-size:17px}
+.stage-h .mech{font-size:12.5px;color:var(--ink-2);margin-left:auto}
+.stage .common{padding:14px 20px;border-bottom:1px solid var(--rule);font-size:14px}
+.stage .common b.lbl{font-size:12px;letter-spacing:.06em;color:var(--ink-3);margin-right:8px}
+.branches{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.br{padding:14px 20px 16px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.br + .br{border-left:1px solid var(--rule)}
+.br .bh{font-size:12px;font-weight:700;letter-spacing:.06em}
+.br.neg .bh{color:var(--hi)} .br.pos .bh{color:var(--accent)}
+.br ul{margin:0;padding-left:1.1em;font-size:14px}
+.br li + li{margin-top:5px}
+.br .res{margin-top:auto;font-size:13px;padding:7px 10px;border-radius:6px}
+.br.neg .res{background:var(--hi-soft)} .br.pos .res{background:var(--accent-soft)}
+.br .voice{font-size:13px;color:var(--ink-2);border-left:2px solid var(--ev-b);padding-left:10px}
+.fork{display:flex;gap:10px;align-items:flex-start;padding:10px 20px;border-bottom:1px solid var(--rule);font-size:13.5px;background:var(--hi-soft)}
+.fork b{color:var(--hi);white-space:nowrap}
+.st{font-family:var(--f-mono);font-size:11.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border:0;border-radius:3px;padding:0 4px;cursor:pointer;font-style:normal}
+.st:hover{text-decoration:underline}
+
+.mech4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mech4 .card{display:flex;flex-direction:column;gap:6px}
+.mech4 .card .look{font-size:13px;color:var(--ink-3);margin-top:auto;padding-top:8px}
+.mech4 .card.hl{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+
+/* sensing */
+.warn{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.warn .card{border-top:4px solid var(--rule)}
+.warn .red{border-top-color:var(--hi)}
+.warn .yel{border-top-color:var(--mid)}
+.warn ul{margin:8px 0 0;padding-left:1.1em;font-size:13.5px;color:var(--ink-2)}
+.warn li + li{margin-top:6px}
+.warn li b{color:var(--ink);font-weight:500}
+details.more{margin-top:14px}
+details.more summary{cursor:pointer;font-size:14px;color:var(--accent);font-weight:500;padding:6px 0}
+details.more[open] summary{margin-bottom:8px}
+.subh{font-family:var(--f-mono);font-size:12px;color:var(--accent);letter-spacing:.08em;font-weight:700;margin-bottom:4px}
+
+/* support */
+.kinds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kinds .card h4{font-size:15.5px}
+.ladder{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,1fr);border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.ladder > div{padding:11px 14px;border-bottom:1px solid var(--rule);font-size:13.5px;min-width:0}
+.ladder .lw{font-family:var(--f-mono);font-weight:700;font-size:12.5px;color:var(--accent);background:var(--sunk)}
+.ladder .lh{font-size:12px;font-weight:700;color:var(--ink-2);background:var(--sunk)}
+.ladder .ln{color:var(--ink-2)}
+.ladder > div:nth-last-child(-n+3){border-bottom:0}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;counter-reset:r}
+.rule{background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 18px 14px 54px;position:relative;min-width:0}
+.rule::before{counter-increment:r;content:counter(r);position:absolute;left:16px;top:13px;font-family:var(--f-mono);font-weight:700;font-size:18px;color:var(--ink-3)}
+.rule.core{border-color:var(--accent)}
+.rule.core::before{color:var(--accent)}
+.rule b{font-size:15px}
+.rule p{font-size:13.5px;color:var(--ink-2);margin-top:3px}
+.checklist{list-style:none;margin:0;padding:0;border-left:2px solid var(--accent);display:flex;flex-direction:column}
+.checklist li{position:relative;padding:0 0 16px 22px}
+.checklist li:last-child{padding-bottom:0}
+.checklist li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--accent)}
+.checklist .w{font-family:var(--f-mono);font-size:12.5px;font-weight:700;color:var(--accent)}
+.checklist p{font-size:14px}
+.dont{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:8px}
+.dont div{display:flex;gap:10px;align-items:flex-start;background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:9px 12px;font-size:13.5px;min-width:0}
+.dont .n{font-family:var(--f-mono);font-size:11.5px;color:var(--hi);font-weight:700;padding-top:2px;flex:none;width:1.6em}
+.dont .t{flex:1;min-width:0}
+.olist{margin:0;padding-left:1.3em;font-size:14px}
+.olist li + li{margin-top:7px}
+.olist li::marker{font-family:var(--f-mono);color:var(--accent);font-weight:700}
+.mtx td:first-child{white-space:nowrap}
+
+.grades{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.grades .ev{width:2em;height:2em;font-size:15px}
+.cshare{margin-top:16px;display:flex;height:14px;border-radius:4px;overflow:hidden;border:1px solid var(--rule)}
+.cshare .ab{flex:1;background:var(--sunk)}
+.cshare .c{flex:1;background:repeating-linear-gradient(135deg,var(--ev-c) 0 2px,transparent 2px 7px)}
+footer{margin-top:72px;padding-block:28px 48px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-3)}
+
+@media (max-width:900px){
+  .picker{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .phases,.aflow,.kinds,.layers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .qgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .helpgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .route{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .myths{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:15px}
+  .wrap{padding-inline:16px}
+  .bar .brand{display:none}
+  .picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split,.mech4,.three,.warn,.rules,.cols2,.grades,.d-grid,.phases,.aflow,.kinds,.layers,.helpgrid,.inv,.branches,.route{grid-template-columns:1fr}
+  .br + .br{border-left:0;border-top:1px solid var(--rule)}
+  .qgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spec-axis{grid-template-columns:1fr}
+  .spec-axis .line{display:none}
+  .spec-side.r{text-align:left}
+  .stage-h .mech{margin-left:0}
+  .ladder{grid-template-columns:1fr}
+  .ladder .lh{display:none}
+  .ladder .ld::before{content:"该做 · ";color:var(--lo);font-weight:700}
+  .ladder .ln::before{content:"不该做 · ";color:var(--hi);font-weight:700}
+  .ladder > div{border-bottom:0}
+  .ladder .ln{border-bottom:1px solid var(--rule)}
+  .ladder > div:last-child{border-bottom:0}
+  .detail{padding:18px 16px}
+  .ch-head{grid-template-columns:1fr}
+  .ch-head .q{grid-column:1}
+  .ch-num{justify-self:start}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="brand">玩家失败心理支撑建设</span>
+    <nav aria-label="章节">
+      <a href="#feel"><span class="code">01</span>失败后的感受</a>
+      <a href="#who"><span class="code">02</span>玩家分类</a>
+      <a href="#path"><span class="code">03</span>退游路径推演</a>
+      <a href="#sense"><span class="code">04</span>感知工具箱</a>
+      <a href="#help"><span class="code">05</span>支撑工具箱</a>
+      <a href="#limits">证据边界</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">赛季制 SLG · 联盟战败之后</div>
+    <h1>玩家失败心理<br>支撑建设</h1>
+    <p class="lede">一场联盟战败之后，玩家会经历什么，为什么有些反应和我们的直觉相反；不同的玩家为什么要区别对待；一次失败如何一步步演变成退游潮；以及我们能用哪些工具发现它、接住它。</p>
+    <div class="route">
+      <a href="#feel"><span class="code">01</span><b>失败后的感受</b><span>玩家会怎样，哪些和直觉不一样</span></a>
+      <a href="#who"><span class="code">02</span><b>玩家分类</b><span>动机、角色、投入；为什么要区别处理</span></a>
+      <a href="#path"><span class="code">03</span><b>退游路径推演</b><span>一场战败的五个阶段，放任 vs 干预</span></a>
+      <a href="#sense"><span class="code">04</span><b>感知工具箱</b><span>识别角色、动机、投入与状态</span></a>
+      <a href="#help"><span class="code">05</span><b>支撑工具箱</b><span>按状态给帮助、时机、规则与红线</span></a>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ================= 01 ================= -->
+<section class="ch" id="feel">
+  <div class="ch-head">
+    <span class="ch-num">01</span>
+    <h2>输了之后，玩家在经历什么</h2>
+    <p class="q">先看反应，再看心理学怎么解释，以及它们和直觉不一致的地方。</p>
+  </div>
+
+  <div class="block first">
+    <div class="scene">
+      <p class="scene-head">设想一个场景：赛季中段的跨服攻城战，联盟主城被破。当晚到第二周，同一个联盟里会出现这些声音。<span class="ev c">C</span> 话语为示意，对应的状态编号见 03。</p>
+      <div class="vig">
+        <div><span class="who">入盟两周的新人</span><q>？？？这就没了？</q><span class="feel"><span class="code">P01</span>冲击：还不知道自己失去了什么</span></div>
+        <div><span class="who">主力打手，当晚</span><q>干他，马上打回来</q><span class="feel"><span class="code">P02</span>亢奋再战：失去目标后的第一反应常常是亢奋，不是低落</span></div>
+        <div><span class="who">中R，凌晨两点</span><q>再来，我不信邪</q><span class="feel"><span class="code">P12</span>追损：在线、出兵、付费都在涨</span></div>
+        <div><span class="who">普通成员，第二天</span><q>谁让打的？</q><span class="feel"><span class="code">P04</span>愤怒-内：矛头指向自己人</span></div>
+        <div><span class="who">世界频道</span><q>这游戏就是逼氪</q><span class="feel"><span class="code">P03</span>愤怒-外：矛头指向对手和官方</span></div>
+        <div><span class="who">指挥</span><q class="silent">战前天天发令，现在一句话都不说，战报也隐藏了</q><span class="feel"><span class="code">P05</span>羞耻：觉得"我就是不行"，于是躲起来</span></div>
+        <div><span class="who">另一位指挥</span><q>我的锅，下次我来守</q><span class="feel"><span class="code">P06</span>内疚：觉得"我这次做错了"，于是补救</span></div>
+        <div><span class="who">安静的大多数</span><q>先看看再说</q><span class="feel"><span class="code">P11</span>观望：在等大佬的动向</span></div>
+        <div><span class="who">盟主，第一周</span><q>比上班还累，让我歇会</q><span class="feel"><span class="code">P09</span>耗竭：管理层是最先被压垮的一层</span></div>
+        <div><span class="who">一位老成员</span><q>输了也好</q><span class="feel"><span class="code">P13</span>解脱：终于不用熬了</span></div>
+        <div><span class="who">小团里留下的人</span><q>人都走了还打什么</q><span class="feel"><span class="code">P20</span>幸存者：朋友走后的内疚与动摇</span></div>
+        <div><span class="who">联盟解散后</span><q>回不去了</q><span class="feel"><span class="code">P21</span>哀伤：失去的是一个共同体</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>决定反应的是评估，不是损失本身</h3>
+    <p class="sub">输掉同一座城，对不同玩家可能意味着失去资产、能力被否定、辜负战友、在对手面前丢脸，或者只是一次练习。玩家会下意识地回答五个问题，答案决定接下来是愤怒、羞耻、内疚、无望还是重建。<span class="ev a">A</span></p>
+    <div class="qgrid">
+      <div><b>失去了什么？</b><i>兵、资源、排名、关系、名声</i><small>→ 冲击有多强</small></div>
+      <div><b>原因会持续吗？</b><i>"只是失误"还是"永远打不过"</i><small>→ 本季无望 vs 游戏无望</small></div>
+      <div><b>我还能改变什么？</b><i>自己能改、联盟能改、谁都改不了</i><small>→ 重建还是无望</small></div>
+      <div><b>还能修复吗？</b><i>兵能补，名誉和关系呢</i><small>→ 羞耻走向补救还是回避</small></div>
+      <div><b>公平吗？</b><i>是否自愿，是否被公平对待</i><small>→ 愤怒、被背叛</small></div>
+    </div>
+    <div class="split" style="margin-top:18px">
+      <div class="card"><span class="tag">羞耻</span><h4>"我是废物"</h4><p>指向整个自我，倾向回避与隐藏。但失败<b>可以修复</b>时，羞耻也能变成补救行动。<span class="ev a">A</span></p></div>
+      <div class="card"><span class="tag">内疚</span><h4>"我这次做错了"</h4><p>指向具体行为，倾向道歉与补救。风险是过度补偿后耗竭，或被推责后转成羞耻。<span class="ev a">A</span></p></div>
+      <div class="card"><span class="tag">愤怒</span><h4>要看指向谁</h4><p>对敌人 → 再战；对管理层 → 换领导；对规则和官方 → 集体离开。一个"负面情绪分数"会把这三者抹平。<span class="ev a">A</span></p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>这些反应和直觉不一样</h3>
+    <p class="sub">下面每一条，都是凭直觉做设计时容易犯的错。研究结论来自临床、职场、体育、军队和其他游戏，放到 SLG 是跨领域转译，效应量只用于判断方向。</p>
+    <div class="myths">
+      <div class="myth"><div class="gut">输了大家都很受伤，要全员安抚</div><div class="fact"><div>重大丧失后约 <b>2/3 的人走韧性轨迹</b>，1/5 慢慢恢复，1/10 慢性低落。要找的是慢性、延迟恢复的少数人。<span class="src">Galatzer-Levy 等 2018，54 项研究 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">群里安静了，说明情绪过去了</div><div class="fact"><div>沉默可能是平复，也可能是羞耻、不敢反对或准备离开。<b>压住表达和真正平复，从外面看一样</b>。留在盟里但不集结、不回应，是最难察觉的流失前状态。<span class="src">Gross 1998 <i class="ev b">B</i> · EVLN <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">战后更活跃了，说明恢复了</div><div class="fact"><div>战后高在线、频繁出兵、短时多笔付费，可能<b>正是追损（tilt）</b>，之后跟着的是失望、懊悔和离开。<span class="src">Palomäki 等 2013 <i class="ev b">B</i></span></div></div></div>
+      <div class="myth"><div class="gut">骂得最凶的人最想走</div><div class="fact"><div>激烈批评不代表归属低，那是在"发声"。<b>堵住发声渠道反而会加速退出</b>。<span class="src">Hirschman 1970；Rusbult 1988 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">羞耻的人只会躲起来</div><div class="fact"><div>失败或形象<b>可以修复</b>时，羞耻更可能带来建设性行动。给他一条修复的路，就能把他从回避拉回补救。<span class="src">Leach &amp; Cidam 2015 元分析 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">对自己宽容，就不会努力改进</div><div class="fact"><div>"失败令人难受，但一次失误不能概括整个人"这种自我宽容，<b>反而让人花更多时间改进</b>。<span class="src">Breines &amp; Chen 2012，四项实验 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">让大家发泄出来就好了</div><div class="fact"><div>发泄不减少愤怒，<b>反刍还会增加攻击</b>。"吐槽区"是有害设计。<span class="src">Bushman 2002 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">报复回去就解气了</div><div class="fact"><div>亲手惩罚别人之后，人<b>反刍更多、感受更差</b>；报复局带不来预期的释怀。<span class="src">Carlsmith 等 2008 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">"别想了，下赛季再来"是安慰</div><div class="fact"><div>这类话会<b>升高</b>负性情绪；单纯倾听也只带来暂时舒缓。先承认损失和付出，再给事实。<span class="src">Shenk &amp; Fruzzetti 2011；Nils &amp; Rimé 2012 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">给建议总是在帮忙</div><div class="fact"><div>失败可控时给建议有用；失败不可控时给建议，等于说"你本可以做得更好"。<span class="src">Cutrona &amp; Russell 1990 <i class="ev b">B</i></span></div></div></div>
+      <div class="myth"><div class="gut">输了当晚开会，把话说开</div><div class="fact"><div>强制的单次情绪复盘无效甚至有害（1 年 PTSD OR 2.51）。<b>冷却后、学习导向</b>的结构化复盘才有效（d≈0.67–0.79）。<span class="src">Cochrane；AAR 元分析 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">放弃本季目标，就是要流失了</div><div class="fact"><div>能从不可达目标脱离、转向新目标的人过得更好。"这季躺了攒资源"可以是健康的重组，"输了也好"的解脱是正当的。<span class="src">Wrosch 等 2003 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">挽留礼包，就该发给最可能走的人</div><div class="fact"><div>风险最高的人不一定对挽留有反应；<b>主动提醒处境，流失率反而从 6% 升到 10%</b>。要按"对干预的敏感度"发。<span class="src">Ascarza 2018；Ascarza 等 2016 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">搞团建就能把人心拉回来</div><div class="fact"><div>"互相喜欢"在控制任务凝聚后对绩效没有独立作用。战败后<b>先给下一个可达目标</b>，保持小队不重排。<span class="src">Mullen &amp; Copper 1994 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">朋友走了，是被负面情绪传染</div><div class="fact"><div>"朋友先走、我后走"至少有四种解释，观察数据分不开。退游潮的引信<b>多半是头部玩家的行动</b>，不是普通成员的情绪。详见 03。<span class="src">Felps 等 2009 <i class="ev a">A</i>；Shalizi &amp; Thomas 2011 <i class="ev a">A</i></span></div></div></div>
+      <div class="myth"><div class="gut">玩家只要还在线，就算留住了</div><div class="fact"><div>"流失"至少是五种结果：离开这场仗、离开联盟、停玩本季、离开这群朋友、离开游戏。原联盟解散、成员一起去新联盟继续玩，就是"组织消失、关系延续、产品留存"。<span class="src">本库推论 <i class="ev c">C</i></span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 02 ================= -->
+<section class="ch" id="who">
+  <div class="ch-head">
+    <span class="ch-num">02</span>
+    <h2>不同的玩家，失去的东西不同</h2>
+    <p class="q">按动机、角色、投入给玩家分类，并说明为什么不同的人、不同的状态需要不同的处理。</p>
+  </div>
+
+  <div class="block first">
+    <div class="spectrum">
+      <div class="spec-axis">
+        <div class="spec-side"><h4>选择最多的人最先离开</h4><p>霸主大R、外交掮客、老兵旅人：有钱、有信息、有别处可去，传播力也最高。</p></div>
+        <div class="line"></div>
+        <div class="spec-side r"><h4>选择最少的人最安静地离开</h4><p>新人、种田建设者、潜水者：没人可跟随，也没人跟随他们，最难察觉。</p></div>
+      </div>
+    </div>
+    <p class="prose muted" style="margin-top:18px">学术上稳定可测的是<b>动机维度</b>，不是"人格类型"，所以分类分四层：前三层（动机、角色、投入）组合出 12 个原型，第四层（特质）决定同一原型的反应强度。原型不是终身标签，同一玩家跨赛季可以换原型。怎么在数据里识别每一层，见 <a href="#sense">04 感知工具箱</a>。</p>
+    <div class="layers" style="margin-top:16px">
+      <a href="#l1"><span class="code">L1</span><b>动机</b><span>他为什么玩：战败威胁了他最在乎的什么</span></a>
+      <a href="#l2"><span class="code">L2</span><b>联盟角色</b><span>他在盟里承担什么：责任、胜任，还是归属</span></a>
+      <a href="#l3"><span class="code">L3</span><b>投入结构</b><span>他付出了什么：付出的是什么，战败拿走的就是什么</span></a>
+      <a href="#l4"><span class="code">L4</span><b>特质调节</b><span>同样的打击，在他身上会被放大多少</span></a>
+    </div>
+  </div>
+
+  <div class="block" id="l1">
+    <h3><span class="code" style="color:var(--accent)">L1</span> 动机：战败威胁了他最在乎的什么</h3>
+    <p class="sub">七个维度是分数，不是类型：每个玩家在七个维度上都有高低，取最高的一两个作标签。维度彼此几乎独立（r &lt; .10），"又爱竞争又爱社交"很常见。维度本身 <span class="ev a">A</span>；后两列是推断 <span class="ev c">C</span>。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>维度</th><th>在 SLG 中表现为</th><th>战败威胁的是什么</th><th>常走的状态</th></tr></thead>
+      <tbody>
+        <tr><td><b>竞争</b></td><td>打排行、抢首占、世界频道论输赢</td><td>排名与"被公认最强"</td><td>羞耻-面子、愤怒-外</td></tr>
+        <tr><td><b>权力（变强）</b></td><td>堆战力、练满武将、攒兵</td><td>兵损与资产被毁，投入"白费"</td><td>追损、无望-游戏</td></tr>
+        <tr><td><b>社群</b></td><td>固定小团、语音群、帮人铺路</td><td>战败本身伤害小，<b>小团散了</b>才伤害大</td><td>幸存者、哀伤</td></tr>
+        <tr><td><b>策略精通</b></td><td>做攻城计划、算行军时差、研究配将</td><td>自己的判断被结果否定；也是最能从复盘中获益的人</td><td>内疚-补救、羞耻</td></tr>
+        <tr><td><b>完成收集</b></td><td>刷活动、冲结算档位、集图鉴</td><td>奖励档位与进度</td><td>接受-转向、无望-本季</td></tr>
+        <tr><td><b>刺激破坏</b></td><td>夜战、拆城、主动挑衅</td><td>不是资产，而是<b>没仗可打</b></td><td>亢奋再战、追损</td></tr>
+        <tr><td><b>放松逃避</b></td><td>规律上线、挂机、少参战</td><td>游戏从放松变成压力（考勤、被打）</td><td>被动放任、解脱</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block" id="l2">
+    <h3><span class="code" style="color:var(--accent)">L2</span> 联盟角色：他承担的是什么</h3>
+    <p class="sub">管理层承担责任与情绪，功能岗承担胜任感，普通成员承担的是资产与归属。<b>管理层的角色本身就是风险</b>：社区证词把管理耗竭列为联盟解体的独立路径 <span class="ev b">B</span>。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>角色</th><th>战败威胁的是什么</th><th>常走的状态</th><th>常见原型</th></tr></thead>
+      <tbody>
+        <tr><td><b>盟主</b>（含副盟主）</td><td>权威与可信度；承担全盟情绪</td><td>耗竭 → 领导真空</td><td>T3、T1</td></tr>
+        <tr><td><b>指挥</b></td><td>胜任感；被公开追责</td><td>内疚、羞耻、耗竭</td><td>T2</td></tr>
+        <tr><td><b>外交</b></td><td>筹码；但也最先知道"去哪里"</td><td>观望 → 迁移准备</td><td>T4</td></tr>
+        <tr><td><b>核心打手</b></td><td>有仗打、排名与战力</td><td>亢奋、追损</td><td>T5、T9、T1</td></tr>
+        <tr><td><b>后勤内政</b></td><td>付出不被看见；资产被毁</td><td>被动放任</td><td>T6</td></tr>
+        <tr><td><b>小团核心</b></td><td>3–8 人小团的完整；他的动向决定整团去留</td><td>幸存者、迁移准备</td><td>T7、T10</td></tr>
+        <tr><td><b>普通成员</b></td><td>资产与奖励档位</td><td>接受-转向、无望-本季</td><td>T6、T7、T11</td></tr>
+        <tr><td><b>边缘成员</b>（含新人）</td><td>不清楚输了意味着什么；归属本来就弱</td><td>冲击、被动放任、安静离开</td><td>T8、T12</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted" style="margin-top:10px">另计<b>网络位置</b>：桥（连接多个小团，离开会切断子群）、核心（情绪与行为的主要传播源）、边缘（流失最安静）。角色与原型不是一一对应：同样是盟主，可能是霸主大R，也可能是盟主管家，两者需要的帮助完全不同。</p>
+  </div>
+
+  <div class="block" id="l3">
+    <h3><span class="code" style="color:var(--accent)">L3</span> 投入结构：付出的是什么，就补什么</h3>
+    <p class="sub">付出的是什么，战败拿走的就是什么，所以补偿要同类（Roschk &amp; Gelbrich 2014 <span class="ev a">A</span>）。两轴都用本服本赛季内的分位，高 = ≥70%（阈值 <span class="ev c">C</span>）。四格只决定<b>给什么</b>，不决定<b>给谁</b>。</p>
+    <div class="inv">
+      <div class="card"><span class="ax">付费高 · 在线低</span><h4>钱重 · T1</h4><p>失去"钱没用"的面子与地位；出路最多，传播力最高。</p><dl><dt>给</dt><dd class="give">程序公正的说明、私下沟通、有尊严的停战或迁移窗口</dd><dt>不给</dt><dd class="nogive">公开补偿（引发平民不公感）</dd></dl></div>
+      <div class="card"><span class="ax">在线高 · 付费低</span><h4>时间重 · T2 T5</h4><p>失去"熬夜白熬"的时间和精力；风险是耗竭后沉默流失。</p><dl><dt>给</dt><dd class="give">兵损返还 + 省时间的工具（预约攻城、自动执行、少考勤）</dd><dt>不给</dt><dd class="nogive">追加需要熬夜的活动</dd></dl></div>
+      <div class="card"><span class="ax">两者都高</span><h4>双重 · T3</h4><p>以上两者，再加对全盟的责任；风险是管理耗竭、领导真空。</p><dl><dt>给</dt><dd class="give">减负工具 + 管理回报（同盟俸禄）+ 共享领导</dd><dt>不给</dt><dd class="nogive">"活跃度下降"类无解的负反馈</dd></dl></div>
+      <div class="card"><span class="ax">两者都低</span><h4>双低 · T8 T12</h4><p>损失小，但本来归属就弱；失去的其实是"被关注"。</p><dl><dt>给</dt><dd class="give">挂到一个小团；一次具体的私下邀请</dd><dt>不给</dt><dd class="nogive">救济式发资源（自尊威胁 <span class="ev a">A</span>）</dd></dl></div>
+    </div>
+    <p class="small muted" style="margin-top:10px">资历也会改变反应：<b>新人</b>（第 1 季）最容易被毒性驱离 <span class="ev a">A</span>；<b>中坚</b>（2–3 季）还没见过"输了下季再来"，沉没成本感最强 <span class="ev c">C</span>；<b>老兵</b>（≥4 季）损失被相对化，忠于朋友而不是服务器 <span class="ev b">B</span>。</p>
+  </div>
+
+  <div class="block" id="l4">
+    <h3><span class="code" style="color:var(--accent)">L4</span> 特质调节：同样的打击，被放大多少</h3>
+    <div class="tscroll"><table>
+      <thead><tr><th>调节器</th><th>放大什么</th><th>帮助怎么修正 <span class="ev c">C</span></th></tr></thead>
+      <tbody>
+        <tr><td class="nw"><span class="code">R1</span> 反刍</td><td>羞耻、愤怒持续更久</td><td>给任务型出口或安静期；不反复推送战报</td></tr>
+        <tr><td class="nw"><span class="code">R2</span> 归因风格</td><td>"永远打不过" → 无望；"官方偏袒" → 对规则失信</td><td>前者做归因再训练；后者公示判定依据 + 申诉</td></tr>
+        <tr><td class="nw"><span class="code">R3</span> 条件性自我价值</td><td>羞耻-面子</td><td>战力变化延迟展示；感谢指向贡献而非能力</td></tr>
+        <tr><td class="nw"><span class="code">R4</span> 过度竞争/自恋</td><td>甩锅；攻击指向让自己丢脸的人</td><td>复盘去个人化；不公开点名其失误</td></tr>
+        <tr><td class="nw"><span class="code">R5</span> 拒绝敏感</td><td>求助没人回 → 24 小时内退盟</td><td>求助 24 小时内必有回应；踢人附理由</td></tr>
+        <tr><td class="nw"><span class="code">R6</span> 目标弹性</td><td>决定走向重建，还是慢性低落</td><td>替代目标清单；把大目标拆小</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3>十二个原型</h3>
+    <p class="sub">四层组合成 12 个原型。点选查看完整卡片，点卡片里的状态可跳到 03。原型的战败路径是本库推断 <span class="ev c">C</span>，来自社区案例与理论，需要产品数据验证。</p>
+    <div class="picker" id="typePicker" role="group" aria-label="选择原型"></div>
+    <div class="detail" id="typeDetail" aria-live="polite"></div>
+  </div>
+
+  <div class="block">
+    <h3>为什么必须区别处理</h3>
+    <p class="sub">两个方向都会让"一刀切"的帮助失效甚至起反作用。</p>
+    <div class="cols2">
+      <div>
+        <div class="subh">同一种状态，不同的人</div>
+        <p class="small muted" style="margin-bottom:10px">同样是"羞耻"或"迁移准备"，对大R、指挥、种田玩家、新人，有效的做法完全不同。<span class="ev c">C</span></p>
+        <div class="tscroll"><table class="mtx">
+          <thead><tr><th></th><th>T1 大R</th><th>T2 指挥</th><th>T6 种田</th><th>T8 新人</th></tr></thead>
+          <tbody>
+            <tr><td><b>羞耻</b></td><td>私下沟通、体面的路；绝不公开补偿</td><td>盟主先担责；给他复盘主持权</td><td>把铺路/器械贡献写进感谢</td><td>解释"输了意味着什么"</td></tr>
+            <tr><td><b>愤怒-外</b></td><td>判定依据与申诉</td><td>战术层的可控归因</td><td>保护性机制（免战、关卡缓冲）</td><td>常态化统计</td></tr>
+            <tr><td><b>耗竭</b></td><td>停氪不劝</td><td>管理减负 + 代理指挥</td><td>安静模式</td><td>无需干预</td></tr>
+            <tr><td><b>迁移</b></td><td>体面的迁移窗口</td><td>换盟当指挥的通道</td><td>整团同行</td><td>挂到一个小团</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="subh">同一种帮助，不同的状态</div>
+        <p class="small muted" style="margin-bottom:10px">同一个动作，放在不同状态上，效果相反。</p>
+        <div class="tscroll"><table>
+          <thead><tr><th>帮助</th><th>有效</th><th>反效果</th></tr></thead>
+          <tbody>
+            <tr><td><b>给建议</b></td><td>失败可控时（"集结晚了 12 分钟"）</td><td>失败不可控时，等于指责 <span class="ev b">B</span></td></tr>
+            <tr><td><b>补偿</b></td><td>玩家归因于"规则不公"时（愤怒-外）</td><td>归因于己方实力时几乎无效；对愤怒-内的人像封口 <span class="ev a">A</span></td></tr>
+            <tr><td><b>复盘</b></td><td>冷却 12–48 小时后，学习导向（愤怒-内、接受-重建）</td><td>亢奋期、耗竭期做，或战败当晚全员语音 <span class="ev a">A</span></td></tr>
+            <tr><td><b>挽留推送</b></td><td>对干预敏感、仍在观望的人</td><td>对"游戏无望"的人，让他重算沉没成本 <span class="ev a">A</span></td></tr>
+            <tr><td><b>拉回战争</b></td><td>亢奋再战的人：给一个可赢的局部目标</td><td>解脱、转向的人：急着拉回只会推走 <span class="ev c">C</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 03 ================= -->
+<section class="ch" id="path">
+  <div class="ch-head">
+    <span class="ch-num">03</span>
+    <h2>推演：一场战败如何变成退游潮</h2>
+    <p class="q">把一次失败放回时间里，看它在哪些节点分岔。</p>
+  </div>
+
+  <div class="block first">
+    <p class="simnote"><b>这是合成推演，不是真实个案。</b>骨架取自状态时间轴的五个阶段与三个分岔点（窗口为推断 <span class="ev c">C</span>），情节按社区笔记里归纳的四种退游序列拼合：头部先走型、内部政治型、领导耗竭型、个人被排斥型。黄色竖线标出的是真实的社区原话与案例编号（<span class="ev b">B</span>，只听得到仍在发声的人，有选择偏差）。右栏是工具箱建议的做法，效果大多待验证，不是保证。</p>
+    <h3 style="margin-top:24px;margin-bottom:10px">登场人物：一个约 100 人的联盟</h3>
+    <div class="cast">
+      <div><span class="code">T3</span><b>盟主</b>管理型，长期在微信群里处理纠纷</div>
+      <div><span class="code">T2</span><b>指挥</b>这次攻城的总指挥</div>
+      <div><span class="code">T1</span><b>大R</b>全盟付费第一，兼副盟主</div>
+      <div><span class="code">T4</span><b>外交</b>和周边各盟都熟</div>
+      <div><span class="code">T5</span><b>主力打手</b>夜战主力</div>
+      <div><span class="code">T9</span><b>中R</b>一直在追赶战力榜</div>
+      <div><span class="code">T6</span><b>种田玩家</b>负责铺路、器械</div>
+      <div><span class="code">T7</span><b>一个 5 人小团</b>一起玩了两季</div>
+      <div><span class="code">T8</span><b>新人</b>入盟两周</div>
+      <div><span class="code">T10</span><b>老兵</b>第五个赛季了</div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">T0</span><h4>战败：主城被破</h4><span class="mech">事件锚点</span></div>
+    <div class="common"><b class="lbl">事件</b>赛季中段跨服攻城，集结晚到十几分钟，主城被破，兵损过半，联盟排名明显下滑。（推演设定）</div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">T0–6h</span><h4>冲击与亢奋</h4><span class="mech">机制：激励脱离周期的"亢奋期"<i class="ev a">A</i>；追损 <i class="ev b">B</i></span></div>
+    <div class="common"><b class="lbl">两条线共同</b>新人看着战报发"？？？"<button class="st" data-state="P01">P01</button>；打手当晚追击再败，兵损翻倍<button class="st" data-state="P02">P02</button>→<button class="st" data-state="P12">P12</button>；中R 凌晨连充三笔想把城打回来<button class="st" data-state="P12">P12</button>；种田玩家默默开盾。</div>
+    <div class="branches">
+      <div class="br neg"><span class="bh">放任</span><ul>
+        <li>盟主没有说话，群里只剩世界频道的嘲讽和胜方的庆祝。</li>
+        <li>结算页弹出"排名骤降"动画；系统给连败的人推了一个礼包。</li>
+      </ul><div class="voice">"I STILL don't know what we really lost… and don't know what we would have gained if we had won"（新人，案例 12）</div></div>
+      <div class="br pos"><span class="bh">按工具箱</span><ul>
+        <li>30 分钟内，盟主一句"知道了，明晚 9 点说明"。</li>
+        <li>结算页只放"验证句 + 事实句"：承认投入，说清失守原因和输掉了什么。</li>
+        <li>追损的人收到冷却提示（兵损、时长），<b>不推付费礼包</b>；跨盟喊话被折叠。</li>
+      </ul></div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">T+6–48h</span><h4>攻击期</h4><span class="mech">机制：甩锅、多元无知 <i class="ev a">A</i></span></div>
+    <div class="fork"><b>分岔 ①</b><span>领导是否在 30 分钟内说明、48 小时内复盘？有 → 团结再战；无 → 表面团结或甩锅内讧</span></div>
+    <div class="branches">
+      <div class="br neg"><span class="bh">放任</span><ul>
+        <li>第二天中午，盟主开全员语音复盘，问"谁的责任"。</li>
+        <li>指挥被点名<button class="st" data-state="P04">P04</button>，他先长文道歉<button class="st" data-state="P06">P06</button>，被继续推责后不再说话<button class="st" data-state="P05">P05</button>。</li>
+        <li>24 小时内 @ 点名是平时的三倍，有人被踢 → <button class="st" data-ally="A05">A05</button> 甩锅内讧。</li>
+        <li>公开频道还在喊"再战"，集结响应率却在下降、开盾的人变多：每个人都以为只有自己想休战 → <button class="st" data-ally="A02">A02</button>。</li>
+      </ul><div class="voice">"after the KvK its always other peoples fault"（案例 10）；"Some will call out individual people"（案例 16）</div><div class="res">联盟进入 A02 + A05</div></div>
+      <div class="br pos"><span class="bh">按工具箱</span><ul>
+        <li>频道冷却 2 小时，指定 2 名值守，不追责。</li>
+        <li>12–24 小时：盟主点名感谢 8 个具体行为（谁铺的路、谁守住了侧门）。</li>
+        <li>36 小时：结构化复盘，四问模板（原计划 / 实际发生 / 为什么 / 下次怎么做），客观战报，<b>没有"谁的责任"栏</b>，盟主自评先行，感谢第一个提反馈的人。</li>
+        <li>匿名意愿投票：多数人选"守住核心州"，少数想休战，盟主看到的是分布，不是名单。</li>
+      </ul><div class="res">联盟走向 <button class="st" data-ally="A01">A01</button> 团结再战</div></div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">T+2–7d</span><h4>低落与分化</h4><span class="mech">机制：信息级联、离职传染 <i class="ev a">A</i>；功能依赖坍塌</span></div>
+    <div class="fork"><b>分岔 ②</b><span>头部玩家的去向：留 → 重建；走 → 被吸收或解体</span></div>
+    <div class="branches">
+      <div class="br neg"><span class="bh">放任</span><ul>
+        <li>大R 停氪，开始看迁服页面<button class="st" data-state="P16">P16</button>，第五天在世界频道发告别帖、把资源送给朋友<button class="st" data-state="P19">P19</button>。</li>
+        <li>外交的私聊对象从盟内转向盟外<button class="st" data-state="P11">P11</button>，带着一个 15 人小团去探路<button class="st" data-state="P16">P16</button>。</li>
+        <li>指挥交出权限<button class="st" data-state="P09">P09</button>。没人发集结了：大家心情未必更差，但<b>组织不起来</b>。</li>
+        <li>"大佬都走了"传开，5 人小团看着朋友退盟<button class="st" data-state="P20">P20</button>；中R 追不回来，觉得"平民永远是韭菜"<button class="st" data-state="P08">P08</button>。</li>
+        <li>≥3 名核心同时有迁移行为 → <button class="st" data-ally="A06">A06</button> 集体迁移筹备。</li>
+      </ul><div class="voice">"half the whales quit after the first one since we lost"（案例 1）；前 12 盟与服务器领导层一起去新服（案例 15）</div><div class="res">联盟进入 A06，接近 A04</div></div>
+      <div class="br pos"><span class="bh">按工具箱</span><ul>
+        <li>运营端触发红色预警（≥3 核心有迁移意向）→ 人工复核。<b>不向盟主推"你的联盟要散了"</b>，也不主动给这几个人推挽留。</li>
+        <li>对大R：私下一对一，公示判定依据，给"体面的路"（有尊严的停战或迁移窗口），不公开补偿他。</li>
+        <li>对外交：提供整团迁移通道和官方的下季匹配信息，谈"带着人去哪"，而不是禁言阻止。</li>
+        <li>指挥"休一季"有正式通道，代理指挥自动显示；兵损按规则部分返还，以玩家自选投向的"重建令"发放。</li>
+        <li>老兵主持一次复盘，充当"稳定的人先在场"。</li>
+      </ul><div class="voice">一次局部胜利就能扭转迁移意向："This SvS we got our first win. And it made me and my alliance reconsider transferring"（案例 6）</div><div class="res">头部留下，或带着人有序离开但留在产品内</div></div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">T+1–3w</span><h4>恢复与重组</h4><span class="mech">机制：领导耗竭 <i class="ev b">B</i>；任务凝聚 <i class="ev a">A</i>；赢家的制度化羞辱 <i class="ev b">B</i></span></div>
+    <div class="fork" style="background:transparent"><b style="color:var(--ink-3)">观察点</b><span>是否出现"可达的新目标 + 小队完整"</span></div>
+    <div class="branches">
+      <div class="br neg"><span class="bh">放任</span><ul>
+        <li>盟主一个人扛：凌晨接电话、自费请指挥，一次失误又被推责，最后退游<button class="st" data-state="P09">P09</button> → 盟主与指挥都 48 小时无操作 → <button class="st" data-ally="A04">A04</button> 领导真空。</li>
+        <li>种田玩家每天登录，但不集结、不回应、护盾常开<button class="st" data-state="P18">P18</button>；新人已经一周没上线。</li>
+        <li>邻近强盟来"整编"：合并、缩编，剩下的人被"当矿挖" → <button class="st" data-ally="A07">A07</button>，触发第二波离开。</li>
+      </ul><div class="voice">"喵咪盟主最终还是退游了…要是官方早点加上管理减负"（案例 23）；"小盟全部合并…谁不来谁死"（案例 26）</div><div class="res">联盟滑向 A09 僵尸或 A08 解体</div></div>
+      <div class="br pos"><span class="bh">按工具箱</span><ul>
+        <li>盟主用上减负工具（预约攻城、同盟任务），把职能委任给 3 名成员，领到管理俸禄；看得到自己的私密负荷面板。</li>
+        <li>一个需要 20 人协作的可达目标：守住一个关口。小队不重排。</li>
+        <li>种田玩家收到一次具体邀请："缺一个守关的"<button class="st" data-state="P18">P18</button>→<button class="st" data-state="P14">P14</button>。</li>
+        <li>新人被挂到一个小团；收集型玩家有了败方贡献档，转向新目标<button class="st" data-state="P15">P15</button>。</li>
+        <li>赢家的部长任命、"监狱"有时长上限，默认折叠。</li>
+      </ul><div class="res">联盟进入 <button class="st" data-ally="A11">A11</button> 重建期</div></div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-h"><span class="w">赛季末</span><h4>重组窗口</h4><span class="mech">机制：社会认同，关系跨季延续 <i class="ev b">B</i></span></div>
+    <div class="fork"><b>分岔 ③</b><span>有没有共同去处？整盟同服 → 关系延续；没有 → 分散、退游</span></div>
+    <div class="branches">
+      <div class="br neg"><span class="bh">放任</span><ul>
+        <li>联盟解散 → <button class="st" data-ally="A08">A08</button>。没有共同去处，各自散开；留下的人偶尔回来看看旧盟页面<button class="st" data-state="P21">P21</button>。</li>
+        <li>跟着外交迁走的 15 人到了新服，发现"别处一样"，一部分直接退游。</li>
+      </ul><div class="voice">"sit in place on an abandoned server being victimised… or just quit for good"（案例 15）</div><div class="res">组织、关系、产品留存同时流失</div></div>
+      <div class="br pos"><span class="bh">按工具箱</span><ul>
+        <li>退旗仪式 + 联盟史，承认这段共同经历<button class="st" data-state="P21">P21</button>。</li>
+        <li>整盟报名同服或备战区，一起决定下季去向。</li>
+        <li>即使有人离开，关系还在，回归通道保持打开。</li>
+      </ul><div class="voice">问君盟：盟主因现实离开一年，回归后 300+ 人归队，"一起输过，也一起扛过最难打的局"（案例 22）</div><div class="res">组织可能换了，关系和产品留存保住了</div></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>从推演里能看出的规律</h3>
+    <p class="sub">"朋友先走、我后走"有四种机制，日志里画出的曲线几乎一样。只有第三种可以直接叫"情绪传染"。上面的推演里，真正的转折点是第二种：<b>头部和功能节点的离开</b>。<span class="ev a">A</span> 方法论；四类区分 <span class="ev c">C</span></p>
+    <div class="mech4">
+      <div class="card"><span class="tag">共同冲击</span><h4>同一次败局分别打击了多人</h4><p>大家各自觉得"继续玩不划算了"，彼此之间未必有影响。</p><p class="look">怎么分辨：同战损、关系弱的人是否也同步退出</p></div>
+      <div class="card hl"><span class="tag">功能依赖坍塌</span><h4>指挥、集结、外交节点一走，剩下的人组织不起来</h4><p>少数指挥退出 → 协调成本上升 → 心情没变，参战收益也下降 → 更多人停止参与。这是"雪崩"，但不需要情绪传染。</p><p class="look">怎么分辨：停止协作先于负面情绪；补位后是否恢复</p></div>
+      <div class="card"><span class="tag">解释与情绪传播</span><h4>接触朋友的沮丧和悲观判断</h4><p>自己的评估被改变。文字渠道里单条信息作用很小（d≈0.02），网络规模会放大它。</p><p class="look">怎么分辨：接触时序、自身情绪前测、信念更新</p></div>
+      <div class="card"><span class="tag">协调性迁移</span><h4>有计划地一起离开当前容器</h4><p>关系完好，只是换了地方。对原联盟是流失，对产品未必。</p><p class="look">怎么分辨：迁移目的地、结伴比例、下季是否复组</p></div>
+    </div>
+    <div class="split" style="margin-top:14px">
+      <div class="card"><span class="tag">信息级联</span><h4>"大佬都走了"</h4><p>看到前人行动后，最优策略是跟随、放下自己的判断。所以及时公开的新信息（去向、计划、时间表）也能把级联翻过来。<span class="ev a">A</span></p></div>
+      <div class="card"><span class="tag">多元无知</span><h4>表面团结，私下动摇</h4><p>每个人都以为只有自己想退，于是更少发声，然后"突然"集体退出。联盟去留是小圈子的切身议题，沉默螺旋效应更大（r≈.34）。<span class="ev a">A</span></p></div>
+      <div class="card"><span class="tag">威胁僵化 · 耗竭</span><h4>领导者也是受损者</h4><p>威胁会让领导收紧控制：整编、胁迫、大规模踢人、强制考勤；长期超负荷则会让他直接跑路。两者都是独立的解体路径。<span class="ev a">A</span> <span class="ev b">B</span></p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>谁先走、谁沉默、谁留下</h3>
+    <div class="tscroll"><table>
+      <thead><tr><th>时间</th><th>先走</th><th>沉默 / 收缩</th><th>留下并起作用</th></tr></thead>
+      <tbody>
+        <tr><td class="n">0–48 小时</td><td>霸主大R（停氪/宣布迁移）、外交掮客（开始探路）</td><td>军师指挥（内疚）、种田建设者（开盾）</td><td>老兵旅人、热血打手（再战）</td></tr>
+        <tr><td class="n">2–7 天</td><td>中R追赶者（追损失败后）、跟随掮客的小团</td><td>盟主（耗竭）、新人（消失）</td><td>目标收集者（算结算）、陪伴者（看小团）</td></tr>
+        <tr><td class="n">1 周–季末</td><td>盟主交权、领导真空后的第二波</td><td>被动放任者</td><td>老兵、有共同去处的小团</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block" id="statePath">
+    <h3>路径上的 21 个个人状态</h3>
+    <p class="sub">状态是暂时的、可并存的、可回退的，同一个人可以同时"羞耻"又"观望"。点选查看评估、情绪、行动和它通向哪里；怎么识别见 04，怎么帮见 05。蓝框是上方所选原型的高发状态。</p>
+    <div class="phases" id="pathPhases"></div>
+    <div class="legend"><span><i class="dot hi"></i>流失风险高或极高</span><span><i class="dot mid"></i>中</span><span><i class="dot lo"></i>低</span></div>
+    <div class="detail" id="pathDetail" aria-live="polite"></div>
+  </div>
+
+  <div class="block" id="allyPath">
+    <h3>联盟层的 11 个状态</h3>
+    <p class="sub">按组织衰退五阶段与集体崩溃改写。左侧色条为流失风险；判定阈值都是待校准起点 <span class="ev c">C</span>。</p>
+    <div class="aflow" id="aFlow"></div>
+    <div class="detail" id="aDetail" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================= 04 ================= -->
+<section class="ch" id="sense">
+  <div class="ch-head">
+    <span class="ch-num">04</span>
+    <h2>感知工具箱：识别角色、动机、状态</h2>
+    <p class="q">先知道他是谁、处在什么状态，才谈得上怎么帮。</p>
+  </div>
+
+  <div class="block first">
+    <h3>目标不是"读出情绪"，而是三个能行动的量</h3>
+    <p class="sub">老玩家的留存由社交特征主导（Park 等 2017 <span class="ev a">A</span>），所以识别的核心不是登录曲线，而是<b>关系网络与职务节点的完整性</b>。</p>
+    <div class="three">
+      <div class="card"><span class="tag">输出 1</span><p class="big">状态概率向量</p><p>21 个个人状态各自的概率，不做单选。从日志与微问卷得到。</p></div>
+      <div class="card"><span class="tag">输出 2</span><p class="big">流失风险</p><p>7 日 / 30 日 / 跨季。日批模型，需要 1–2 个赛季积累标签。</p></div>
+      <div class="card"><span class="tag">输出 3</span><p class="big">干预敏感度</p><p>这个人对某类帮助会不会有反应。<b>只能通过随机对照得到</b>（Ascarza 2018 <span class="ev a">A</span>）。</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>识别"他是谁"：角色、投入、动机、特质</h3>
+    <p class="sub">顺序：先用官职、行为阈值与网络位置定角色，再用分位定投入，最后用 14 天行为指纹定动机。所有阈值为待校准起点 <span class="ev c">C</span>。</p>
+    <div class="cols2">
+      <div>
+        <div class="subh">L2 角色：官职优先，行为补充</div>
+        <div class="tscroll"><table>
+          <thead><tr><th>角色</th><th>判定</th></tr></thead>
+          <tbody>
+            <tr><td>盟主</td><td>官职</td></tr>
+            <tr><td>指挥</td><td>官职为指挥官，或近 14 天发令/标记次数盟内前 5%</td></tr>
+            <tr><td>外交</td><td>官职为外交官，或跨盟私聊对象数盟内前 5%</td></tr>
+            <tr><td>核心打手</td><td>出征次数与战功均为盟内前 20%</td></tr>
+            <tr><td>后勤内政</td><td>土管/团长，或铺路、器械、捐献次数前 20%</td></tr>
+            <tr><td>小团核心</td><td>网络位置为"核心"，且所在小团 3–8 人</td></tr>
+            <tr><td>普通成员</td><td>以上都不满足，且有盟内互惠关系</td></tr>
+            <tr><td>边缘成员</td><td>盟内互惠关系 &lt;2，或入盟 &lt;14 天</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small muted" style="margin-top:10px"><b>网络位置</b>（日批计算）：桥 = 与 ≥2 个小团有互惠关系且中介中心性前 10%；核心 = 度数前 20% 且互惠率 ≥50%；边缘 = 互惠关系 &lt;2。第一版可以只用官职加行为阈值，图计算后补。</p>
+      </div>
+      <div>
+        <div class="subh">L3 投入：看分位，更要看变化</div>
+        <p class="small" style="margin-bottom:12px">付费分位 × 在线分位（本服本赛季）× 参加过的赛季数。<b>变化比水平更重要</b>：付费骤停或骤增、在线时长断崖，本身就是追损或耗竭的信号。付费分层只用于选择帮助方式，不得用于定向推付费礼包。</p>
+        <div class="subh">L1 动机：一次短问卷 + 14 天行为指纹</div>
+        <p class="small" style="margin-bottom:8px">入盟或赛季初做一次 5–8 题问卷（1–5 分），每个维度一题，之后用行为回填：</p>
+        <div class="tscroll"><table>
+          <thead><tr><th>维度</th><th>问卷示例</th><th>行为指纹</th></tr></thead>
+          <tbody>
+            <tr><td>竞争 / 权力</td><td>"我很在意我们在服里排第几"</td><td>主动进攻次数或世界频道发言分位 ≥80%</td></tr>
+            <tr><td>社群</td><td>"我在这个游戏里主要是为了和朋友一起"</td><td>私聊对象 ≥5 且互惠率高；帮助/捐献多</td></tr>
+            <tr><td>策略精通</td><td>"我享受琢磨排兵布阵，胜过打赢本身"</td><td>使用发令/标记/复盘工具；被 @ 求助</td></tr>
+            <tr><td>完成收集</td><td>"赛季奖励拿不全会让我很难受"</td><td>活动完成率 ≥90%；常看奖励页</td></tr>
+            <tr><td>刺激破坏</td><td>"我玩主要是为了打架"</td><td>战斗次数高且兵损率高；夜战比例高</td></tr>
+            <tr><td>放松逃避</td><td>"我玩是为了放松，不想有压力"</td><td>登录规律但战斗参与低；依赖自动化</td></tr>
+          </tbody>
+        </table></div>
+        <p class="small muted" style="margin-top:8px">战前与战后行为冲突时，<b>以战后为准</b>：战败会暴露真实动机。</p>
+      </div>
+    </div>
+    <div style="margin-top:20px">
+      <div class="subh">L4 特质：筛查题 + 行为代理</div>
+      <div class="tscroll"><table>
+        <thead><tr><th>调节器</th><th>筛查题（1–5 分）</th><th>行为代理</th></tr></thead>
+        <tbody>
+          <tr><td class="nw"><span class="code">R1</span> 反刍</td><td>"输了以后我会反复想那一仗"</td><td>战后夜间反复提及同一失误；发言集中在 0–2 点</td></tr>
+          <tr><td class="nw"><span class="code">R2</span> 归因风格</td><td>"我们输是因为永远打不过" / "是因为官方偏袒"</td><td>聊天关键词；战后是否尝试新策略</td></tr>
+          <tr><td class="nw"><span class="code">R3</span> 条件性自我价值</td><td>"战力/排名掉了我会觉得自己很失败"</td><td>排名下降后立刻退出频道、隐藏战报</td></tr>
+          <tr><td class="nw"><span class="code">R4</span> 过度竞争/自恋</td><td>"输了通常是队友的问题"</td><td>战后对内辱骂、踢人、@ 点名</td></tr>
+          <tr><td class="nw"><span class="code">R5</span> 拒绝敏感</td><td>"没人回我消息我会很难受"</td><td>求助无回应后 24 小时内退盟</td></tr>
+          <tr><td class="nw"><span class="code">R6</span> 目标弹性</td><td>"打不下这座城我会去做别的事"</td><td>战后转向种田/活动，而不是离线</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small muted" style="margin-top:8px">筛查题不做"心理测量"用途，只用于分层抽样与校准行为代理；不向玩家展示分数。</p>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>识别"他处在什么状态"</h3>
+    <p class="sub">所有状态推断都相对于一次<b>失败事件</b>计算：事件类型（失城、沦陷、被俘、关卡失守、赛季目标确定不可达、联盟解散、关键成员离开）、玩家首次看到战报的时刻、分对象记录的损失量、可恢复性、是否有公开追责、赛季剩余天数。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>层</th><th>做什么</th><th>输入</th><th>优点 / 局限</th></tr></thead>
+      <tbody>
+        <tr><td><b>规则层</b></td><td>阈值规则即时标记状态，附"为什么被标记"</td><td>登录、战斗、发言量、官职、付费、导航日志</td><td>可解释、分钟级；高召回低精确，阈值待校准 <span class="ev c">C</span></td></tr>
+        <tr><td><b>模型层</b></td><td>日批预测流失风险与多标签状态概率</td><td>7/14/28 天窗口统计 + 战败事件 + 网络特征</td><td>精度更高；需 1–2 个赛季积累标签</td></tr>
+        <tr><td><b>人工 / 半自动层</b></td><td>补标签、复核高风险判定</td><td>战后微问卷、盟主报告、客服工单、人工抽样</td><td>能覆盖外部渠道和规则看不出的状态；有人力成本</td></tr>
+      </tbody>
+    </table></div>
+    <p class="small muted" style="margin:10px 0 18px">规则层给"为什么"，模型层给"多大概率"，人工层给"对不对"。规则层只用多数 SLG 已有的日志就能起步。</p>
+    <div class="subh">21 个状态的可观测信号 <span class="ev c">C</span></div>
+    <div class="tscroll"><table>
+      <thead><tr><th>状态</th><th>行为信号</th><th>典型言语</th><th>流失 / 传播</th></tr></thead>
+      <tbody id="signalRows"></tbody>
+    </table></div>
+    <p class="small muted" style="margin-top:8px">规则覆盖不到的：解脱只能靠问卷确认；接受-重建是残差状态；被背叛、哀伤的核心信号在文本或产品外。中文反讽与黑话让情绪文本标签误判较高，依赖它的规则需要人工抽样校准后再触发动作。</p>
+  </div>
+
+  <div class="block">
+    <h3>识别联盟：预警规则</h3>
+    <p class="sub">预警只在运营端触发人工复核，<b>不自动向盟主推送"你的联盟要散了"</b>。数字都是待校准起点 <span class="ev c">C</span>。</p>
+    <div class="warn">
+      <div class="card red"><span class="tag">红色 · 24 小时内动作</span><ul>
+        <li><b>领导真空</b>：盟主与指挥均 ≥48h 无发令/操作；≥72h 升级，启动代理指挥或禅让</li>
+        <li><b>集体迁移</b>：≥3 名核心（含桥节点）出现迁移意向行为</li>
+        <li><b>甩锅内讧</b>：@ 点名/辱骂密度 ≥ 基线 3× 且伴随踢人</li>
+        <li><b>高调退出</b>：头部付费者 7 日付费归零 + 告别语义</li>
+      </ul></div>
+      <div class="card yel"><span class="tag">黄色 · 一周内动作</span><ul>
+        <li><b>表面动摇</b>：集结响应率下降 10–30%，且公开表态与私下行为出现差距</li>
+        <li><b>分裂前兆</b>：匿名意愿投票分歧度高</li>
+        <li><b>领导耗竭前兆</b>：发令/公告间隔 ≥ 2× 基线</li>
+        <li><b>子群流失</b>：任一小团 30 日保留率 &lt;60%</li>
+      </ul></div>
+      <div class="card"><span class="tag">结构性 · 赛季级</span><ul>
+        <li><b>桥节点 ≤2</b>：联络人太少，一走就断</li>
+        <li><b>贡献与付费高度集中</b>：头部一动全盟动</li>
+        <li><b>新人 7 日留存低</b>：毒性最先驱离新人 <span class="ev a">A</span></li>
+      </ul></div>
+    </div>
+    <details class="more">
+      <summary>展开 24 条联盟健康度指标</summary>
+      <div class="tscroll"><table>
+        <thead><tr><th>#</th><th>指标</th><th>定义</th><th>类型</th></tr></thead>
+        <tbody id="indicators"></tbody>
+      </table></div>
+    </details>
+  </div>
+
+  <div class="block">
+    <h3>谁能看到什么</h3>
+    <p class="sub">盟主端看到的是"下一步可以做什么"，运营端看到的是"谁处于什么风险"。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>内容</th><th>给盟主</th><th>只给运营</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr><td>集结响应率、响应延迟（聚合）</td><td class="yes">是</td><td class="yes">是</td><td>任务导向，可替代玩家自建的考勤</td></tr>
+        <tr><td>小团结构与桥节点</td><td>聚合，不点名</td><td>点名</td><td>点名会被用于排挤</td></tr>
+        <tr><td>个人状态</td><td class="no">否</td><td>是（30 日）</td><td>隐私；发声风险</td></tr>
+        <tr><td>迁移意向</td><td>只显示咨询总数</td><td class="yes">是</td><td>点名会触发提前驱逐或对立</td></tr>
+        <tr><td>匿名意愿投票结果</td><td>仅分布</td><td class="yes">是</td><td>打破多元无知，就是要让盟主看到分布</td></tr>
+        <tr><td>领导者自身的负荷指标</td><td>是（私密）</td><td class="yes">是</td><td>自我觉察，配减负工具</td></tr>
+        <tr><td>预警等级（红/黄）</td><td class="no">否</td><td class="yes">是</td><td>"变弱"反馈会压低集体效能</td></tr>
+        <tr><td>建议动作清单（模板）</td><td class="yes">是</td><td class="yes">是</td><td>自主导向的帮助</td></tr>
+      </tbody>
+    </table></div>
+    <div class="cols2" style="margin-top:16px">
+      <div class="card"><h4>高风险节点只做被动准备</h4><p>盟主、指挥、桥节点被误判为"要走"并触发干预，可能反而提示他们离开（Ascarza 2016 <span class="ev a">A</span>）。对这些人只准备好工具与信息，不主动推送。普通成员误判成本低，可容忍高召回。每次推送都要记录依据规则，供复核与申诉。</p></div>
+      <div class="card"><h4>看不见的地方不去抓</h4><p>微信、QQ、Discord 等外部渠道和私聊内容不可观测，按合规也不读取，用盟主端自报和微问卷补足。联盟的真实决策常发生在外部群里，规则层会系统性地晚于真实变化。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 05 ================= -->
+<section class="ch" id="help">
+  <div class="ch-head">
+    <span class="ch-num">05</span>
+    <h2>支撑工具箱：先分状态，再选帮助</h2>
+    <p class="q">四类帮助、逐状态做法、时机、补偿规则、领导者支持、不要做与红线。</p>
+  </div>
+
+  <div class="block first">
+    <div class="callout">证据最硬的帮助<b>不是安慰，而是结构化复盘</b>（d≈0.67–0.79 <span class="ev a">A</span>）；证据最硬的"不要做"是<b>强制的单次情绪复盘</b>和<b>吐槽区</b> <span class="ev a">A</span>。最有效的传播切断是<b>减少不确定性</b>。</div>
+    <div class="kinds" style="margin-top:16px">
+      <div class="card"><span class="tag">情绪按摩</span><h4>改变感受与解释</h4><p>先验证再重构；认可指向社会价值而非能力；不用控制性语言。</p></div>
+      <div class="card"><span class="tag">物质帮助</span><h4>资源、兵力、时间、名额</h4><p>增量定向；部分补偿；同类补偿；自主导向。</p></div>
+      <div class="card"><span class="tag">技术 / 策略</span><h4>工具、信息、路径、规则</h4><p>给路径不给口号；把大目标拆小；用工具减负。</p></div>
+      <div class="card"><span class="tag">隔离 / 结构</span><h4>频道、可见性、节点、小队</h4><p>隔离的是高唤醒的少数源和渠道，不是难过的人；保持小队完整；延迟而非隐藏。</p></div>
+    </div>
+  </div>
+
+  <div class="block" id="stateHelp">
+    <h3>逐状态的帮助</h3>
+    <p class="sub">点选一个状态，看四类帮助各自怎么做、什么时候做、做错了会怎样。空格表示该类帮助在此状态不适用或有害。</p>
+    <div class="phases" id="helpPhases"></div>
+    <div class="detail" id="helpDetail" aria-live="polite"></div>
+  </div>
+
+  <div class="block">
+    <h3>联盟状态的帮助</h3>
+    <div class="tscroll"><table>
+      <thead><tr><th>联盟状态</th><th>官方 / 系统可做</th><th>盟主可做</th><th>时机</th><th>反作用</th></tr></thead>
+      <tbody id="allyHelpRows"></tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3>时机是变量</h3>
+    <p class="sub">官方信息最早；认可与联结在 2–24 小时；复盘在冷却之后；意义与叙事在一周左右；表达性写作放到季末。</p>
+    <div class="ladder">
+      <div class="lh">窗口</div><div class="lh">该做</div><div class="lh">不该做</div>
+      <div class="lw">0–30 分钟</div><div class="ld">官方/盟主首条"知道了 + 何时说明"；结算页验证句 + 事实句；真实近失点</div><div class="ln">复盘、说教、劝慰、补偿承诺、胜者庆祝展示、排名骤降动画</div>
+      <div class="lw">30 分–2 小时</div><div class="ld">频道冷却；核心值守；折叠跨盟喊话；三件 10 分钟小事</div><div class="ln">吐槽频道；全员语音；追责；付费礼包</div>
+      <div class="lw">2–24 小时</div><div class="ld">具体感谢；开放留言板；谣言的时间表；"下一步"三条路径；匿名意愿投票</div><div class="ln">盟主长篇总结；系统群发感谢；直接发救济</div>
+      <div class="lw">12–48 小时</div><div class="ld">结构化 AAR；按违背类型做说明；补偿规则公示 + 投票</div><div class="ln">归责式复盘；诚信型争议靠道歉；黑箱分配</div>
+      <div class="lw">24–72 小时</div><div class="ld">归因再训练；自我慈悲框架；仪式；标识不降级；以"重建工具"形式发补偿</div><div class="ln">碾压局里强推"可控归因"；人为近失</div>
+      <div class="lw">3–7 天</div><div class="ld">获益发现与叙事（数据可核）；常态化统计；20 人协作新目标；职能委任</div><div class="ln">逼问意义；拿社交活动替代任务</div>
+      <div class="lw">1–4 周 / 季末</div><div class="ld">表达性写作（季末或 1–2 个月后）；联盟史；成长信息；回归通道</div><div class="ln">口号推送</div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>物质帮助的八条规则</h3>
+    <p class="sub">前四条是核心规则（蓝框），后四条是补充。</p>
+    <div class="rules">
+      <div class="rule core"><b>按增量定向，不按风险</b> <span class="ev a">A</span><p>候选池来自风险模型，实际发放对象来自随机对照估计的 uplift。不按"风险最高"发。</p></div>
+      <div class="rule core"><b>部分补偿优于超额</b> <span class="ev a">A</span><p>返还 30–60% 战损落在收益曲线的陡峭段；超额补偿收益递减。对强关系老玩家可提高比例。</p></div>
+      <div class="rule core"><b>同类补偿</b> <span class="ev a">A</span><p>兵损给兵；被坑给"重来的机会"；被忽视给关注。</p></div>
+      <div class="rule core"><b>自主导向，不是救济</b> <span class="ev a">A</span><p>玩家选投向的重建令、任务化互助、加倍器。文案去掉"救济/抚恤/慰问"。</p></div>
+      <div class="rule"><b>不与参战、上线硬挂钩</b> <span class="ev a">A</span><p>挂钩奖励削弱内在动机；但要有行为条件防滥用（如挂机失效）。</p></div>
+      <div class="rule"><b>归因匹配</b> <span class="ev a">A</span><p>归因于规则不公时补偿最有效；归因于己方实力时转向路径与关系。</p></div>
+      <div class="rule"><b>帮弱不削强</b> <span class="ev b">B</span><p>胜利仍须显得是挣来的。</p></div>
+      <div class="rule"><b>防策略性利用</b> <span class="ev b">B</span><p>败方奖励与"参与率"绑定会被故意输利用。补偿基于损失事实，而不是结果选择。</p></div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>领导者：最高杠杆、最脆弱的节点</h3>
+    <p class="sub">三条路径各自都能独立导致解体。</p>
+    <div class="split">
+      <div class="card"><span class="tag">路径 1</span><h4>耗竭</h4><p>凌晨接电话、自费月卡、失误被推责后退游；"在微信群的时间多于游戏"。<span class="ev b">B</span></p><p class="vs">→ 减负工具（预约攻城、同盟任务、AI 军师、代理指挥）；同盟俸禄；职能委任给 2–3 名非盟主成员；自动禅让兜底；私密负荷面板；交权/休假的正式通道</p></div>
+      <div class="card"><span class="tag">路径 2</span><h4>威胁僵化</h4><p>输后整编、胁迫、压制发声、大规模踢人。<span class="ev a">A</span> <span class="ev b">B</span></p><p class="vs">→ 复盘模板去责任栏；把"打/不打"改为具体目标与条件；"变弱"反馈延迟展示</p></div>
+      <div class="card"><span class="tag">路径 3</span><h4>错误的信任修复</h4><p>能力型违背（失误）该道歉；诚信型违背（被指故意）道歉反而坐实。<span class="ev a">A</span></p><p class="vs">→ 说明模板按违背类型分支；留言板先于总结；操作日志可导出</p></div>
+    </div>
+    <div class="cols2" style="margin-top:24px">
+      <div>
+        <h3 style="font-size:17px;margin-bottom:14px">盟主战后行动清单</h3>
+        <ol class="checklist">
+          <li><span class="w">30 分钟内</span><p>一句"知道了 + 何时说明"。</p></li>
+          <li><span class="w">2 小时内</span><p>指定 2 名值守；开启频道冷却；不追责。</p></li>
+          <li><span class="w">12–24 小时</span><p>开留言板或匿名意愿投票；对 5–10 个具体行为点名感谢。</p></li>
+          <li><span class="w">24–48 小时</span><p>结构化 AAR：原计划 / 实际发生 / 为什么 / 下次怎么做。盟主自评先行，感谢第一个反馈的人。</p></li>
+          <li><span class="w">48–72 小时</span><p>发布下一步三条路径与各自第一步；职能委任；补偿分配规则公示 + 投票。</p></li>
+          <li><span class="w">一周内</span><p>一个需要 20 人协作的可达目标；保持小队不重排。</p></li>
+          <li><span class="w">赛季末</span><p>退旗仪式、联盟史、共同决定下季去向。</p></li>
+        </ol>
+      </div>
+      <div>
+        <h3 style="font-size:17px;margin-bottom:14px">传播切断手段（按优先级）</h3>
+        <ol class="olist">
+          <li><b>减少不确定性</b>：30 分钟首条说明、决策时间表、"盟主在线，未发起解散"状态标签、代理指挥自动显示。几乎没有误伤。</li>
+          <li><b>让稳定者先在场</b>：核心值守、老兵主持复盘。</li>
+          <li><b>匿名意愿收集</b>：打破"只有我想休战"的错觉。</li>
+          <li><b>渠道冷却</b>：战后 2 小时冷却、折叠跨盟喊话、拆分作战与闲聊频道；保留私聊和留言板。</li>
+          <li><b>延迟而非隐藏</b>：离开广播延迟到领导说明之后。</li>
+          <li><b>限制制度化羞辱</b>：部长、监狱、挖矿设时长上限，默认折叠。</li>
+          <li><b>盟主执行、说明理由的临时禁言</b>；系统不做无解释禁言。</li>
+          <li><b>踢出持续煽动者</b>：最后手段，先核对是不是桥节点。</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <h3>"不要做"总清单</h3>
+    <p class="sub">24 条，每条都有证据或合规依据。</p>
+    <div class="dont" id="donts"></div>
+  </div>
+
+  <div class="block">
+    <h3>可借鉴的行业先例</h3>
+    <p class="sub">按证据与可行性排序。具体版本与数值以来源笔记为准，单一来源的条目引用前需复核。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>#</th><th>机制</th><th>对应什么</th></tr></thead>
+      <tbody>
+        <tr><td class="n">1</td><td>败方贡献档（三战"雄踞"）：把"输了但打得多"单独定价</td><td>无望-本季、接受-转向 <span class="ev a">A</span></td></tr>
+        <tr><td class="n">2</td><td>整盟迁移 / 同服（率土备战区、回归专服）</td><td>关系延续的机制化 <span class="ev a">A</span><span class="ev b">B</span></td></tr>
+        <tr><td class="n">3</td><td>规则内战损返还（率土攻城 50%、三谋 PvE 90%），而非事后邮件</td><td>即时、同类补偿 <span class="ev a">A</span></td></tr>
+        <tr><td class="n">4</td><td>管理减负 + 管理回报（预约攻城、同盟任务、AI 军师、同盟俸禄）</td><td>领导耗竭 <span class="ev b">B</span></td></tr>
+        <tr><td class="n">5</td><td>不活跃自动禅让 / 代理指挥</td><td>领导真空 <span class="ev b">B</span></td></tr>
+        <tr><td class="n">6</td><td>与胜负脱钩的贡献货币（率土荣誉/名望、ROK Honor）</td><td>无望-本季、接受-转向 <span class="ev b">B</span></td></tr>
+        <tr><td class="n">7</td><td>有尊严的结束（三战俘虏可赎可救）；还缺整盟停战/归附机制</td><td>羞耻、迁移准备 <span class="ev b">B</span><span class="ev c">C</span></td></tr>
+        <tr><td class="n">8</td><td>官方联盟立传（率土名盟录含解散日期、EVE 生命周期）</td><td>哀伤：仪式与意义 <span class="ev a">A</span><span class="ev b">B</span></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="block">
+    <h3>伦理与合规红线</h3>
+    <p class="sub">感知与支撑都建立在玩家行为数据上。第 1–5 条是法规与平台约束，第 6–10 条是本工具箱的设计原则。</p>
+    <div class="tscroll"><table>
+      <thead><tr><th>#</th><th>红线</th><th>依据</th></tr></thead>
+      <tbody>
+        <tr><td class="n">1</td><td><b>目的限定</b>：分析只用于改善战后体验与组织支持，不用于差别定价或诱导付费</td><td>个人信息保护法</td></tr>
+        <tr><td class="n">2</td><td><b>数据最小化</b>：只存行为特征与风险分，不存"情绪诊断"；聊天只存标签不存原文；情绪标签 30 日过期；不向第三方共享</td><td>个人信息保护法</td></tr>
+        <tr><td class="n">3</td><td><b>追损状态禁止推付费礼包</b>；补偿不与充值捆绑</td><td>算法推荐管理规定第八条</td></tr>
+        <tr><td class="n">4</td><td><b>透明与选择</b>：隐私政策说明用途；可关闭个性化干预；自动化决策可申诉</td><td>个人信息保护法</td></tr>
+        <tr><td class="n">5</td><td><b>未成年人</b>：14 岁以下不进入任何状态模型</td><td>未成年人保护相关规定</td></tr>
+        <tr><td class="n">6</td><td><b>出海产品</b>：文本/行为推断不属于 EU AI Act 禁止的生物特征情绪识别，但按高风险系统做透明与评估</td><td>EU AI Act</td></tr>
+        <tr><td class="n">7</td><td><b>不对玩家展示个人状态</b>；不向盟主点名成员风险或迁移意向</td><td>发声风险</td></tr>
+        <tr><td class="n">8</td><td><b>不欺骗</b>：不做人为近失包装；实验对照组不被剥夺既有权益</td><td>近失效应伦理边界</td></tr>
+        <tr><td class="n">9</td><td><b>高风险节点只做被动准备</b></td><td>Ascarza 2016 反向效应</td></tr>
+        <tr><td class="n">10</td><td><b>每次干预可追溯</b>：记录触发规则，供复核与申诉</td><td>误判保护</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ================= 边界 ================= -->
+<section class="ch" id="limits">
+  <div class="ch-head">
+    <span class="ch-num">证据</span>
+    <h2>证据边界</h2>
+    <p class="q">这套框架哪些是硬的，哪些还只是起点。</p>
+  </div>
+  <div class="grades">
+    <div class="card"><span class="ev a">A</span><h4 style="margin-top:10px">多项研究、元分析、验证量表</h4><p>机制方向可信。效应量来自原研究情境，只用于方向和粗估。</p></div>
+    <div class="card"><span class="ev b">B</span><h4 style="margin-top:10px">单项研究、行业一手材料、社区证词</h4><p>可作依据，但要看原情境。社区证词有选择偏差：只听得到仍在发声的人。</p></div>
+    <div class="card"><span class="ev c">C</span><h4 style="margin-top:10px">本知识库的推断</h4><p>尚未在任何具体产品数据上检验，是"待校准的起点"，不是事实。</p></div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <p><b style="color:var(--ink)">大约一半的内容是 C 级</b>：所有阈值、原型的战败路径、状态的可观测标志、时间轴窗口、原型和调节器对帮助的修正，以及 03 的推演情节。没有研究直接证明"SLG 战败 → 情绪机制 → 集体永久流失"这条完整因果链，也没有找到针对 SLG 战败后心理干预的实验。</p>
+    <div class="cshare" role="img" aria-label="约一半内容为 C 级"><div class="ab"></div><div class="c"></div></div>
+    <div class="small muted" style="display:flex;justify-content:space-between;gap:12px;margin-top:4px"><span>A / B：机制与来源</span><span style="text-align:right">C：阈值、路径、标志、时间窗、修正</span></div>
+  </div>
+  <div class="cols2" style="margin-top:28px">
+    <div>
+      <h3 style="font-size:17px;margin-bottom:12px">最值得先验证的五项干预</h3>
+      <ol class="olist">
+        <li>结构化 AAR 包：学习导向、客观战报、去责任栏、盟主自评先行。</li>
+        <li>结算页的"验证句 + 事实句"与 30 分钟首条说明模板。</li>
+        <li>自主导向补偿（玩家选投向的重建令）vs 同额直接发放。</li>
+        <li>整团迁移/同服通道对产品层留存的影响。</li>
+        <li>匿名意愿投票对"公开表态-私下意愿"差距与分裂概率的影响。</li>
+      </ol>
+    </div>
+    <div>
+      <h3 style="font-size:17px;margin-bottom:12px">仍未回答的问题</h3>
+      <ol class="olist">
+        <li>具体产品中的状态分布与时间轴。</li>
+        <li>原型能否在产品数据中区分开。</li>
+        <li>头部玩家去向和平均情绪，哪个预测力更强。</li>
+        <li>赢家侧：败方留存对胜方留存的贡献（死服问题）。</li>
+        <li>外部渠道（微信/QQ/Discord）承载了多少传播。</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<footer>
+  来源：知识库 slg-defeat-psychology 正式文档 01 失败心理机制、02 玩家分类、03 状态清单、04 识别与预警、05 干预工具箱；03 推演中的玩家原话来自 research/evidence-notes/N8 社区案例。理论与实证来自临床、职场、体育、军队、MMO/MOBA 等领域，在 SLG 中的作用权重未知。
+</footer>
+</main>
+
+<script>
+(function(){
+const EV = s => s.replace(/（([^（）]*?)(A|B|C)(\/(A|B|C))?）/g,(m,pre,g1,_,g2)=>{
+  const p = pre.replace(/[，,]\s*$/,'');
+  return (p?`<span class="small muted">（${p}）</span>`:'')+`<span class="ev ${g1.toLowerCase()}">${g1}</span>`+(g2?`<span class="ev ${g2.toLowerCase()}">${g2}</span>`:'');
+});
+
+const TYPES = {
+T1:{n:"霸主大R",en:"The Sovereign",exit:"最先走",mix:"权力 + 竞争 ｜ 盟主或核心打手 ｜ 钱重、资历中高",lose:"面子与地位（\"钱没用\"）、对局面的掌控",path:"冲击 → 羞耻-面子 → 愤怒-外（对面更氪 / 官方偏袒）→ 追损氪金 或 高调退出",out:"迁到能赢的服（社区：\"迁走 → 发现别处一样 → 退游\"）；或直接停氪观望",val:"价值最高；流失风险中高；传播力最高（\"一半鲸鱼第一次输了就退了\"）",best:"程序公正的判定依据（不是补偿）；给\"体面的路\"（有尊严的停战/迁移窗口）；私下一对一沟通，不公开安抚",bad:"公开\"补偿大R\"（引发平民不公感）；把他的离开广播给全盟",st:["P05","P03","P12","P19","P16","P02","P17"]},
+T2:{n:"军师指挥",en:"The Commander",exit:"沉默收缩",mix:"策略精通 + 竞争 ｜ 指挥 ｜ 时间重",lose:"胜任感；被公开追责；对成员的责任内疚",path:"内疚-补救 → 若被推责则羞耻 → 耗竭 → 先辞指挥再退游",out:"转普通成员\"休一季\"；换盟当指挥；退游",val:"功能价值最高（指挥走则集结崩）；流失风险高；传播力高（其退位是阈值信号）",best:"结构化 AAR（学习导向、客观战报、四问模板）；盟主先承担责任；具体感谢；\"下一场预案\"工具",bad:"归责式复盘；让他在情绪热期公开解释；系统展示\"指挥失误\"标签",st:["P06","P05","P09","P13","P14","P19"]},
+T3:{n:"盟主管家",en:"The Steward",exit:"沉默收缩",mix:"社群 + 策略精通 ｜ 盟主 ｜ 时间重（常兼钱）",lose:"权威、可信度、精力；承担全盟的情绪",path:"威胁僵化（收紧控制、硬打、大规模踢人）或退缩沉默 → 耗竭 → 弃盟/交权 → 领导真空",out:"交给核心管理\"休息一季\"；或跑路（\"上一个赛季的盟主扛不住跑路了\"）",val:"联盟存续的枢纽；社区证词把管理耗竭列为解体的独立路径",best:"管理减负工具（预约攻城、同盟任务、AI 军师）；物质回报（同盟俸禄）；公告模板；共享领导（职能委任）",bad:"系统给盟主推\"你的联盟活跃度下降 30%\"这类无解的负反馈",st:["P09","P06","P13"]},
+T4:{n:"外交掮客",en:"The Broker",exit:"最先走",mix:"社群 + 策略精通 ｜ 外交 ｜ 投入中等",lose:"筹码；但同时获得信息（哪里能去）",path:"冷静评估（观望）→ 迁移准备 → 带小团迁移",out:"最早、最有组织地离开；常带走 5–20 人",val:"个人价值中；结构价值极高（桥节点），离开会切断子群",best:"把迁移做成\"整团合法通道\"，让他带着人留在产品内；给他官方信息（下季匹配、迁移规则）以减少谣言",bad:"禁言/踢出（会带走整块子群）；隐瞒规则变动",st:["P11","P16","P19"]},
+T5:{n:"热血打手",en:"The Warrior",exit:"留下再战",mix:"刺激破坏 + 竞争 ｜ 核心打手 ｜ 时间重、中氪",lose:"不是资产，而是\"有仗打\"；被压制到无法出兵是最大打击",path:"亢奋再战 → tilt/追损 → 若长期无仗可打则无聊流失",out:"去有仗打的地方；或在本服\"搅屎\"",val:"活跃度贡献大；流失风险中；传播力中（骂战主力）",best:"局部可赢的小目标（拆迁、守关、击退一次进攻）；真实的\"转折点\"数据（仅差距 <10% 时呈现）；冷却模式而非禁言",bad:"护盾/免战期过长让他\"没事干\"；把他的挑衅当毒性一刀切",st:["P02","P12","P04","P17"]},
+T6:{n:"种田建设者",en:"The Builder",exit:"安静离开",mix:"完成收集 + 权力（养成）｜ 后勤内政或普通成员 ｜ 低中氪、时间中",lose:"资产被农、成长中断、\"被沦陷\"的无力",path:"冲击 → 退缩龟缩（被动放任）→ 沉默流失或休眠",out:"开盾休眠；换到和平的盟/服；下季回归",val:"人数最多的层之一（\"失去平民小R 对游戏的打击是致命的\"）；流失最安静",best:"保护性机制（新手/沦陷保护、关卡耐久缓冲）；\"重建令\"式自主导向补偿；把他的贡献（铺路、器械）写进战报感谢",bad:"救济式发资源（自尊威胁）；被大R 歧视的门槛（\"没宝物不配进盟\"）",st:["P01","P18","P10","P07","P08","P13","P15","P20"]},
+T7:{n:"陪伴社交者",en:"The Companion",exit:"跟随小团",mix:"社群 ｜ 普通成员或小团核心 ｜ 低氪",lose:"不是战果，是朋友的心情和小团的完整",path:"跟随小团：小团留则留、迁则迁、散则散",out:"与小团同进退；小团散了才退游",val:"个人风险取决于小团；高等级玩家的留存由社交特征主导",best:"保持小队不重排；整团迁移通道；小团内的\"值守联结点\"",bad:"战后打散小队重组；只看他个人数据就判定他\"活跃正常\"",st:["P11","P20","P21","P10","P16"]},
+T8:{n:"新人边缘",en:"The Newcomer",exit:"安静离开",mix:"未定型 ｜ 边缘成员（新人）｜ 双低",lose:"不知道自己失去了什么（\"I still don't know what we really lost\"）",path:"冲击/困惑 → 无意义 → 安静离开",out:"退游（毒性最先驱离新玩家）",val:"个体价值低，生态价值高；流失量最大",best:"解释\"输了意味着什么、赢了会得到什么\"的战报；把他挂到一个小团；不把他暴露在跨盟嘲讽里",bad:"战后第一条推送是补偿邮件（他不知道为什么补偿）",st:["P01","P11"]},
+T9:{n:"中R追赶者",en:"The Striver",exit:"2–7 天后走",mix:"权力（养成）+ 竞争 ｜ 核心打手 ｜ 中氪、时间中高",lose:"追赶的希望；\"钱白花了\"的沉没成本",path:"愤怒-外 → 追损氪金 或 无望-游戏（永远追不上）",out:"停氪观望；退游；少数转大R",val:"付费增长的主力；流失风险高；可能是\"对干预最敏感\"的人群",best:"可控归因的复盘（\"输在集结时差而非战力\"）；部分补偿；与胜负脱钩的贡献货币",bad:"近失包装（\"就差一点\"）；把补偿与充值捆绑",st:["P03","P12","P08","P09"]},
+T10:{n:"老兵旅人",en:"The Veteran Nomad",exit:"留下 · 忠于朋友",mix:"策略精通 + 社群 ｜ 任一角色（常为小团核心）｜ 长资历、投入弹性",lose:"\"又一季\"，损失被相对化",path:"接受-重建 或 接受-转向；情绪平稳",out:"跨季跟朋友走；当\"传帮带\"；在多款 SLG 间迁徙",val:"稳定器；流失风险低，但\"忠于朋友不忠于服\"",best:"让他做\"正性源\"（值守、复盘主持）；给他跨季组队的确定性",bad:"把他当普通成员考勤",st:["P14","P15","P07","P21"]},
+T11:{n:"目标收集者",en:"The Completionist",exit:"留下算结算",mix:"完成收集（+ 权力）｜ 普通成员 ｜ 中氪",lose:"赛季奖励档位、成就进度",path:"接受-转向：迅速计算\"还能拿什么\"",out:"留到结算；若结算无望（门槛、名额）则提前转入备战区或退",val:"风险中；对\"结算规则可预期\"最敏感",best:"败方贡献档（三战\"雄踞\"）；透明的名额规则；替代目标清单",bad:"名额\"看盟主良心\"的黑箱分配",st:["P15","P07","P11"]},
+T12:{n:"潜水搭便车者",en:"The Lurker",exit:"无声退出",mix:"放松逃避（各维度都低）｜ 边缘成员 ｜ 双低",lose:"无所谓",path:"无声退出",out:"退游或长期挂机",val:"低；但占用名额，影响结算与匹配",best:"不投入干预资源；只在结算期给低门槛参与",bad:"把他计入\"流失预警\"消耗预算",st:["P18"]}
+};
+
+const PH = [
+ {t:"冲击与亢奋期",w:"首发 T0–6h",ids:["P01","P02","P12"]},
+ {t:"攻击期",w:"首发 T+6–48h",ids:["P03","P04","P05","P06","P10"]},
+ {t:"低落与分化期",w:"首发 T+2–7d",ids:["P07","P08","P09","P11","P16","P17","P19"]},
+ {t:"恢复与重组期",w:"首发 T+1–3w 至季末",ids:["P13","P14","P15","P18","P20","P21"]}
+];
+
+const S = {
+P01:{n:"冲击/否认",ap:"这不可能，怎么会这样",em:"麻木、不真实感",act:"反复刷新战报、查看损失；或立刻离线",dur:"分钟到数小时",nx:"P02 / P03 / P05 / P11",sig:"战报页停留时间异常；战后 30 分钟内登出",say:"\"？？？\"\"这就没了？\"",ar:["T8","T6"],r:"mid",c:"中",s:"低",
+ h:{emo:"战报页只放\"验证句 + 事实句\"（A）",mat:"",tech:"真实的转折点数据，仅在差距 <10% 时呈现（B）",iso:"折叠跨盟嘲讽（B）",when:"0–30 分钟",bad:"劝慰文案等于无效化；此刻发补偿邮件，玩家不知道为什么补偿"}},
+P02:{n:"亢奋再战",ap:"马上打回来",em:"高唤醒，愤怒与兴奋混合",act:"立刻集结、追击、夜战",dur:"小时",nx:"成功 → P14；再败 → P03 / P12",sig:"战后 2 小时内出征次数飙升；兵损率上升",say:"\"干他\"\"别怂\"",ar:["T5","T1"],r:"lo",c:"低（短期）",s:"高",
+ h:{emo:"",mat:"",tech:"一个可赢的局部目标 + 集结倒计时（C）",iso:"",when:"0–6 小时",bad:"此刻复盘；此刻推付费礼包"}},
+P12:{n:"追损/tilt",ap:"必须把它赢回来",em:"高唤醒、控制感受损",act:"连续出兵不计兵损；连续氪金；熬夜",dur:"小时到天",nx:"P09 / P08 / P14",sig:"战后 6h 出征 ≥3、兵损率飙升；短时多笔付费；凌晨连续战斗；忽略提醒",say:"\"再来\"\"不信邪\"",ar:["T1","T5","T9"],r:"hi",c:"高",s:"中",
+ h:{emo:"冷却提示（兵损、时间），不说教（A）",mat:"禁止推送付费礼包（合规，B）",tech:"\"体面的停\"：短免战 / 整军清单三件事（B）",iso:"限速而非禁止（C）",when:"即时",bad:"近失包装；连败礼包"}},
+P03:{n:"愤怒-外",ap:"对面更氪 / 匹配不公 / 官方偏袒",em:"道德愤慨",act:"世界频道声讨、举报、要求官方说明",dur:"天",nx:"P17 / P08 / P14",sig:"跨盟频道发言激增；客服工单；负面评价",say:"\"这游戏就是逼氪\"\"匹配有黑幕\"",ar:["T9","T1"],r:"mid",c:"中",s:"高",
+ h:{emo:"六句公告：知道了 / 何时说明 / 依据 / 共情一句 / 一件能做的事 / 不指责（B）",mat:"补偿在此状态有效：判定不公时按规则公示 + 申诉通道；部分补偿（A）",tech:"判定依据 24h 内公示；已知问题看板（B）",iso:"世界频道冷却模式；不删帖（B）",when:"30 分钟首条；24 小时完整",bad:"\"无可奉告\"；秒回道歉；黑箱补偿"}},
+P04:{n:"愤怒-内",ap:"我们输在自己人",em:"愤怒 + 被辜负",act:"群内追责、点名、要求换指挥；或退盟",dur:"天",nx:"P10 / P16 / A05",sig:"盟内 @ 点名激增；弹劾申请；对指挥的私聊；踢人",say:"\"谁让打的\"",ar:["T5"],r:"mid",c:"中",s:"极高",
+ h:{emo:"盟主先担责的一句话；不公开追责（A）",mat:"此时发资源会被读作封口",tech:"冷却 12–48h 后的结构化 AAR：四问模板、客观战报、禁\"谁的责任\"栏（A）",iso:"盟主执行并说明理由的临时禁言（B）；作战/闲聊频道分离（C）",when:"12–48 小时",bad:"战败当晚全员语音复盘；权威主导复盘"}},
+P05:{n:"羞耻-面子",ap:"我丢人了，我们成了笑话",em:"羞耻，指向整体自我或公众形象",act:"减少可见性：退频道、隐藏战报、不上语音；能修复时会尝试补救",dur:"天到周",nx:"可修复 → P06；不可修复 → P18；自恋型 → P19",sig:"战前活跃者战后零发言但登录仍在；隐藏战报；改名/换头像；拒绝被 @",say:"\"不玩了，丢不起人\"\"别提了\"",ar:["T1","T2"],r:"hi",c:"高",s:"低",
+ h:{emo:"具体的人对具体行为的感谢（A）；自我慈悲框架\"很多指挥首次跨服都遇到\"（A）；标识不降级（B）",mat:"自主导向的\"重建令\"，玩家自己选投向（A）",tech:"归因再训练：三个可改变量卡（A）",iso:"不展示排名骤降动画；战力变化延迟 24h 展示（B）",when:"2–72 小时",bad:"公开安抚；\"你很强别在意\"；依赖式救济"}},
+P06:{n:"内疚-补救",ap:"我这次失误害了大家",em:"内疚，指向具体行为",act:"道歉、加班铺路、自费补偿盟友",dur:"天",nx:"被接纳 → P14；过度补偿 → P09；被推责 → P05",sig:"战后贡献/捐献激增；长文道歉；主动申请降职",say:"\"我的锅，下次我来守\"",ar:["T2","T3"],r:"mid",c:"中（被推责则高）",s:"低",
+ h:{emo:"接受道歉 + 给修复路径；感谢其补救行为（A）",mat:"限制他自费补偿，把补偿做成任务（C）",tech:"下一场预案模板；\"重来的机会\"（A）",iso:"",when:"24–72 小时",bad:"让他反复道歉；把他的失误做成系统标签"}},
+P10:{n:"被背叛",ap:"说好的不踢人 / 公平匹配 / 一起走，没有兑现",em:"违背感、不信任",act:"公开质问、退盟、向官方申诉",dur:"天到周，可长期存留",nx:"P19 / P16 / P08",sig:"引用旧承诺的发言；截图取证；退盟并在世界频道说明",say:"\"当初说好的\"\"过河拆桥\"",ar:["T6","T7"],r:"hi",c:"高",s:"高",
+ h:{emo:"按违背类型：能力型 → 道歉；诚信型 → 证据或否认（A）",mat:"补偿不能代替说明（A）",tech:"资源流水 / 操作日志可导出（B）",iso:"",when:"反馈窗口之后",bad:"道歉了事；拿补偿当歉意"}},
+P07:{n:"无望-本季",ap:"这赛季没戏了",em:"低落，但有边界",act:"降低投入，转向种田/活动，或等结算",dur:"到赛季末",nx:"P15 / P08",sig:"集结参与降但登录稳定；查看结算规则页；活动完成率维持",say:"\"等下赛季吧\"",ar:["T11","T6","T10"],r:"lo",c:"低中",s:"低",
+ h:{emo:"常态化统计\"X% 联盟经历过失守\"，慎用（B）",mat:"与胜负脱钩的贡献货币和败方贡献档（B）",tech:"替代目标清单 + 结算规则透明（B）",iso:"",when:"1–7 天",bad:"空泛的希望口号"}},
+P08:{n:"无望-游戏",ap:"以后也不会有机会",em:"无望、疏离",act:"停止投入、清空资源、告别",dur:"周",nx:"P19 / 永久流失",sig:"资源赠送或清空；卸载前访问设置页；告别帖",say:"\"这游戏没救了\"\"平民永远是韭菜\"",ar:["T9","T6"],r:"hi",c:"极高",s:"中",
+ h:{emo:"承认离开正当；不做挽留式推送（A/C）",mat:"回归通道：回归专服、整盟同服（B）；不给\"最高风险\"者发挽留礼包（A）",tech:"只有当下季结构真的会变时才给路径（C）",iso:"",when:"周",bad:"主动推送让他重新盘算沉没成本"}},
+P09:{n:"耗竭",ap:"打不动了",em:"麻木、疲惫",act:"请假、挂机、交出职务",dur:"周",nx:"P13 / P18 / 退游",sig:"在线时长断崖；深夜在线消失；@ 响应延迟；公告间隔拉长",say:"\"比上班还累\"\"让我歇会\"",ar:["T3","T2","T9"],r:"hi",c:"高",s:"中",
+ h:{emo:"平静与安全：减推送、不加新活动、允许不复盘（B）",mat:"管理层：同盟俸禄类物质回报（B）；成员：补偿不与参战捆绑（A）",tech:"管理减负：预约攻城、同盟任务、AI 军师、代理指挥（B）",iso:"\"安静模式\"；值守交给他人（B）",when:"立即减负；一周内不加码",bad:"堆活动、逼参与、考勤"}},
+P11:{n:"沉默观望",ap:"看大佬怎么办",em:"不确定、焦虑",act:"不表态、少发言、维持最低参与；私下打听",dur:"天到周",nx:"跟随触发者 → P14 / P16 / P19",sig:"登录稳定、发言归零、私聊上升；查看他人主页和联盟列表",say:"\"先看看\"\"再说吧\"",ar:["T7","T8","T11","T4"],r:"mid",c:"看阈值是否被触发",s:"被动",
+ h:{emo:"减少不确定性：决策时间表、状态标签\"盟主在线，未发起解散\"（B）",mat:"",tech:"匿名意愿投票打破多元无知（A）；让稳定者先表态（C）",iso:"",when:"2–48 小时",bad:"强推社交、拉人头"}},
+P16:{n:"迁移准备",ap:"这里不行，别处可能行",em:"期待与不舍",act:"探路、囤票、退盟前置、拉小团",dur:"天到周（受迁移窗口约束）",nx:"迁移；迁移失败后 → P08",sig:"查看迁服/护照页面；联盟商店换票；跨盟私聊；为满足条件清空资源",say:"\"哪个服收人\"",ar:["T4","T1","T7"],r:"mid",c:"中",s:"极高",
+ h:{emo:"不做道德化拦截，\"真的要抛弃盟友吗\"会引发抗拒（A）",mat:"整团迁移通道（B）",tech:"目标服真实信息；迁移规则透明（B）",iso:"延迟而非隐藏离开广播（C）",when:"迁移窗口前",bad:"隐瞒规则变动；禁言掮客"}},
+P17:{n:"复仇",ap:"让他们付出代价",em:"怨恨、兴奋",act:"针对性打击、卖州、进对方盟做内应",dur:"周",nx:"得手 → P14；否则 P08",sig:"对同一目标的重复攻击；跨阵营行为异常",say:"\"记住你了\"",ar:["T5","T1"],r:"lo",c:"低（短期）",s:"中",
+ h:{emo:"亲自报复后反刍更多，不在情绪上鼓励（A）",mat:"",tech:"合法的对抗出口：下一场、可赢的局部（C）",iso:"限制无意义的互相沦陷（C）",when:"周",bad:"仪式化的\"敌人\"叙事"}},
+P19:{n:"高调退出",ap:"我走，让你们知道后果",em:"愤怒 + 自我肯定",act:"世界频道告别、清资源给朋友、拉人一起走、解散小团",dur:"即时",nx:"流失；带走 3–30 人",sig:"告别帖；资源大额赠送；小团成员同步退盟",say:"\"兄弟们走了\"\"不伺候了\"",ar:["T1","T2","T4"],r:"hi",c:"高",s:"极高",
+ h:{emo:"私下一对一，给\"体面的路\"（C）",mat:"",tech:"快速的官方/盟主说明，隔离叙事（B）",iso:"延迟广播；不公开对抗（C）",when:"即时",bad:"公开挽留；公开对抗"}},
+P13:{n:"解脱",ap:"终于不用熬了",em:"轻松，伴随一点内疚",act:"正常登录，但拒绝新的战争承诺",dur:"周",nx:"P15 / P14 / 温和流失",sig:"登录规律化、深夜在线消失、活动完成率上升（规则难识别，需问卷）",say:"\"输了也好\"",ar:["T3","T2","T6"],r:"mid",c:"中",s:"低",
+ h:{emo:"承认解脱是正当的（C）",mat:"低强度目标的奖励（C）",tech:"低强度目标（C）",iso:"",when:"周",bad:"急着把他拉回战争"}},
+P14:{n:"接受-重建",ap:"输在哪我知道，能改",em:"平静、精熟取向",act:"参与 AAR、承担新职能、补兵修城",dur:"持续",nx:"稳定",sig:"使用复盘工具；接受职能；贡献恢复",say:"\"下次集结提前 10 分钟\"",ar:["T10","T2"],r:"lo",c:"低",s:"正向",
+ h:{emo:"放到值守 / 复盘主持位，当正性源（A）",mat:"重建加速器（C）",tech:"AAR 包；预案闭环（A）",iso:"",when:"持续",bad:"—"}},
+P15:{n:"接受-转向",ap:"这条路不通，走别的路",em:"平静",act:"从争霸转向种田/收集/社交；或换一个目标",dur:"到赛季末",nx:"稳定或跨季回归",sig:"战斗↓、建造/活动↑；查看替代目标页",say:"\"这季躺了，攒资源\"",ar:["T11","T6","T10"],r:"lo",c:"低",s:"低",
+ h:{emo:"认可他的新角色（C）",mat:"败方贡献档（B）；转向目标的奖励（C）",tech:"替代目标清单（A）",iso:"",when:"到季末",bad:"用战争 KPI 考核他"}},
+P18:{n:"被动放任",ap:"懒得管了",em:"疏离",act:"留在盟里，但不集结、不回应、不投入",dur:"周到月",nx:"慢性流失",sig:"登录仍在、贡献归零、@ 无回应、护盾常开",say:"（无）",ar:["T6","T12"],r:"hi",c:"高，最难感知",s:"低",
+ h:{emo:"一次具体的私下邀请：\"缺一个守关的\"（C）",mat:"低门槛小任务的奖励（C）",tech:"小任务清单（C）",iso:"",when:"周",bad:"考勤施压；救济式邮件"}},
+P20:{n:"幸存者",ap:"他们走了，剩下我们",em:"内疚、焦虑",act:"观望是否跟随；参与下降（也可能短期更卖力）",dur:"周",nx:"P11 / P16 / P14",sig:"小团 ≥2 人退盟后 7 日内自身活跃下降；私聊对象减少",say:"\"人都走了还打什么\"",ar:["T7","T6"],r:"hi",c:"高",s:"中",
+ h:{emo:"程序公正地解释\"为什么他们走了\"；让留下的人看到离开者被体面对待（A）",mat:"补位资源，任务化发放（C）",tech:"20 人协作的新目标（A）；不打散剩余小队",iso:"保持小队完整（A/B）",when:"7 天内",bad:"打散重组；只搞社交活动"}},
+P21:{n:"哀伤",ap:"那个盟没了",em:"哀伤",act:"在丧失与恢复之间摆动：怀旧发帖、寻找旧友、偶尔回归",dur:"周到月",nx:"跨季重组或长期离开",sig:"联盟解散后登录节律不规则；访问旧盟页面；怀旧帖",say:"\"回不去了\"",ar:["T10","T7"],r:"mid",c:"中",s:"低",
+ h:{emo:"仪式：退旗、联盟史、纪念碑（A）",mat:"回归专服、整盟同服（B）",tech:"跨季组队工具（B）",iso:"",when:"赛季末",bad:"逼问\"意义\"；立即清空一切痕迹"}}
+};
+
+const ACOLS = [
+ {h:"战后 48 小时",ids:["A01","A02","A05","A10"]},
+ {h:"分化",ids:["A03","A04","A06"]},
+ {h:"走向",ids:["A07","A09","A11"]},
+ {h:"终局",ids:["A08"]}
+];
+const A = {
+A01:{n:"团结再战",r:"lo",def:"战败后仍按原目标协同，领导已说明",j:"48h 内集结响应率不低于战前 80%，领导有说明，无退盟潮",pre:"领导 30 分钟内说明；核心值守",nx:"A11 / 稳定",d:["P02","P14"],c:"低",s:"正向",of:"不打扰；提供 AAR 包",ld:"30 分钟首条说明；48h 内复盘",w:"0–48 小时",bad:"系统此时发\"士气低落\"提示"},
+A02:{n:"表面团结、私下动摇",r:"mid",def:"公开表态支持再战，实际参与与私下行为已经背离",j:"公开支持再战，但私聊上升、集结响应率下降 10–30%、护盾开启率上升",pre:"领导未及时说明；沉默者增多",nx:"A03 / A06 / A09",d:["P11","P18","P05"],c:"中（潜伏）",s:"中",of:"匿名意愿投票工具；状态标签",ld:"决策时间表；让稳定者先表态",w:"2–48 小时",bad:"强推动员"},
+A03:{n:"主战/主和分裂",r:"mid",def:"对\"继续打还是收缩\"出现公开两派，决策停滞",j:"群内两派表态；投票/弹劾；发言极化",pre:"领导未及时定调",nx:"A05 / A04",d:["P04","P03","P07","P13"],c:"中",s:"高",of:"投票/决策工具；程序公正模板",ld:"把\"打/不打\"改成具体目标与条件的选择",w:"24–72 小时",bad:"道德化的二元投票"},
+A04:{n:"领导真空",r:"hi",def:"盟主与指挥同时缺位，决策与日常管理无人承担",j:"盟主与指挥均 ≥48h 无发令/操作（≥72h 升级）；副职代行；申请无人处理",pre:"管理层耗竭",nx:"A09 / A08",d:["P11","P20"],c:"高",s:"中",of:"代理指挥自动显示；不活跃自动禅让（率土 24h、Avatar RC 3 天）",ld:"副职预授权",w:"48h 无操作起",bad:"系统不经程序替玩家决定新盟主"},
+A05:{n:"甩锅内讧",r:"hi",def:"战后公开追责、点名与互相攻击在短时间内密集出现",j:"@ 点名、踢人、辱骂在 24h 内密集出现",pre:"战后立即公开复盘",nx:"A03 / A08",d:["P04","P05","P10"],c:"高",s:"极高",of:"频道冷却模式；复盘模板去责任栏",ld:"盟主自评先行；感谢第一个反馈的人",w:"0–48 小时",bad:"追责第一个说真话的人"},
+A06:{n:"集体迁移筹备",r:"hi",def:"多名核心成员同时在为离开做准备",j:"≥3 名核心（含桥节点）同时查看迁服/其他联盟；联盟商店换票激增",pre:"掮客活动；头部表态",nx:"A07 / A08",d:["P16","P11"],c:"极高",s:"极高",of:"整团迁移通道；目标服信息",ld:"与掮客谈\"带着人去哪\"，而不是阻止",w:"迁移窗口前",bad:"隐瞒、禁言"},
+A07:{n:"被吸收/合并",r:"mid",def:"被强盟整编、NAP 缩编或设为分盟，失去独立决策",j:"被强盟\"整编\"、NAP 缩编、设分盟",pre:"战败后头部盟的威胁僵化",nx:"A09 / A08",d:["P10","P20"],c:"中",s:"中",of:"限制赢家政治羞辱的强度与可见性（部长任命、监狱、挖矿的时长）",ld:"谈判附庸条件",w:"被吸收期间",bad:"让败方\"当矿挖\"过久"},
+A08:{n:"解体",r:"hi",def:"联盟解散，或大规模退出而实际失去组织功能",j:"解散，或 7 日内退盟 >40%",pre:"A04–A07 任一",nx:"关系可能跨容器延续",d:["P21","P19"],c:"极高",s:"高",of:"联盟史/纪念；回归通道；关系延续工具",ld:"交代去向",w:"解散后至季末",bad:"立即清空一切痕迹"},
+A09:{n:"僵尸联盟",r:"hi",def:"名义存在，但集结与管理基本停摆",j:"名义存在，集结响应率 <20%，无公告",pre:"A02 长期化",nx:"A08 或合服",d:["P18"],c:"高（慢性）",s:"低",of:"合服/重组窗口；低门槛参与",ld:"交权，或解散并保留史册",w:"赛季中后段",bad:"无休止的\"活跃度警告\""},
+A10:{n:"归附/称臣",r:"mid",def:"以附庸身份存续：被俘、受保护或被胜方任命",j:"以附庸身份存续（俘虏、受保护、被任命部长）",pre:"战败 + 有接纳方",nx:"A11 / A09",d:["P07","P15"],c:"中",s:"低",of:"附庸期间的最低保障（免战、可赎）",ld:"明确期限与条件",w:"附庸期间",bad:"无限期附庸"},
+A11:{n:"重建期",r:"lo",def:"有新的可达目标，职能委任完成，小队保持完整",j:"有新的可达目标、职能委任完成、小队保持",pre:"A01 或 A10 之后",nx:"稳定",d:["P14","P15"],c:"低",s:"正向",of:"职能委任面板；每周团队学习节点",ld:"一个 20 人协作目标",w:"重建期 1–4 周",bad:"只搞社交"}
+};
+
+const IND = [
+["集结响应率","响应数 / 被邀请数，7 日滚动","先行"],["响应延迟中位数","从发令到响应","先行"],["核心节点在线连续性","盟主/指挥/桥节点 48h 内是否有操作","先行"],["发令/公告间隔","与基线的比值","先行"],["申请积压","入盟申请处理延迟","先行"],["职务变动密度","辞职、交接、踢人 / 7 日","先行"],["内部互动密度","盟内私聊/互助边数 / 成员数","先行"],["桥节点数与集中度","连接不同小团的节点数，≤2 则脆弱","结构"],["小团完整性","各小团 30 日保留率","先行"],["迁移意向行为","查看迁服页/换票/跨盟私聊的核心人数","先行"],["退盟后去向","退盟 24h 内加入他盟 / 迁服 / 无","滞后"],["护盾开启率","成员开盾比例","先行"],["贡献集中度","战功/捐献的 Gini","结构"],["头部付费变化","前 5 名付费 7 日变化","先行"],["公开表态与私下行为差距","支持再战发言 vs 集结响应下降","先行"],["@ 点名与辱骂密度","24h 内","先行"],["世界频道负面发言占比","本盟成员","先行"],["沉默者比例","战前活跃、战后 48h 零发言","先行"],["深夜在线比例","0–5 点会话占比","先行"],["新人 7 日留存","入盟 7 日仍活跃","滞后"],["匿名意愿投票分布","\"下一步想做什么\"的分歧度","先行"],["战后 30 分钟内领导说明","布尔","先行"],["结算档位预期","按当前局面预计的名额档","结构"],["跨季重合率","与上季同盟成员重合比例","滞后"]
+];
+
+const DONT = [
+["强制、集体的单次情绪复盘","A"],["吐槽 / 发泄区","A"],["无效化式安慰：\"别想了\"\"下赛季再来\"","A"],["控制性的动员语言","A"],["依赖导向的救济式补偿与文案","A"],["秒回道歉；玩家发声前发通稿","A"],["信息真空、\"无可奉告\"","B"],["把社交活动当凝聚解药","A"],["拿成长型、希望口号做主力","A"],["诚信型背叛让当事人\"道歉了事\"","A"],["人为近失包装","A"],["归责式、权威主导、无客观材料的复盘","A"],["耗竭期堆活动、逼参与","B"],["黑箱补偿分配、假发声","A"],["战败后醒目展示排名骤降","B"],["追责第一个承认错误的人","B"],["把\"别人也输了\"做成对他盟的嘲讽","A"],["按流失风险最高发补偿","A"],["主动推送让人重新审视沉没成本","A"],["追损状态推付费礼包","A"],["退盟/迁服设道德化拦截文案","A"],["隐藏（而非延迟）离开广播","C"],["禁言或踢出桥节点","A"],["把\"活跃度下降\"当负反馈推给管理者","B"]
+];
+
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const evs = s => EV(esc(s));
+const lvlText = {hi:"高",mid:"中",lo:"低"};
+const spreadCls = s => /极高|^高/.test(s)?'hi':/正向/.test(s)?'pos':/^中/.test(s)?'mid':'lo';
+const churnCls = s => /极高|^高/.test(s)?'hi':/^中|看阈值/.test(s)?'mid':'lo';
+const stateChip = id => `<button type="button" class="chip" data-state="${id}"><span class="code">${id}</span>${S[id].n}</button>`;
+const typeChip = id => `<button type="button" class="chip" data-type="${id}"><span class="code">${id}</span>${TYPES[id].n}</button>`;
+const linkIds = s => esc(s)
+  .replace(/\b(P\d\d)\b/g,m=>S[m]?`<button type="button" class="st" data-state="${m}">${m}</button> ${S[m].n}`:m)
+  .replace(/\b(A\d\d)\b/g,m=>A[m]?`<button type="button" class="st" data-ally="${m}">${m}</button> ${A[m].n}`:m);
+
+let curType='T1', curPath='P05', curHelp='P04', curAlly='A02';
+
+/* archetypes */
+$('typePicker').innerHTML = Object.keys(TYPES).map(k=>`<button type="button" class="pk" data-pick-type="${k}" aria-pressed="false"><span class="code">${k}</span><b>${TYPES[k].n}</b><small>${TYPES[k].exit}</small></button>`).join('');
+function renderType(k){
+  curType=k; const t=TYPES[k];
+  document.querySelectorAll('[data-pick-type]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pickType===k));
+  $('typeDetail').innerHTML = `
+   <div class="d-head"><span class="code">${k}</span><h4>${t.n}</h4><span class="en">${t.en}</span><span class="pill pos">${t.exit}</span></div>
+   <dl class="d-grid">
+    <div class="full"><dt>组成 · 动机 ｜ 角色 ｜ 投入</dt><dd>${esc(t.mix)}</dd></div>
+    <div><dt>战败让他失去的是</dt><dd>${esc(t.lose)}</dd></div>
+    <div><dt>典型出路</dt><dd>${esc(t.out)}</dd></div>
+    <div class="full"><dt>常走的状态路径</dt><dd>${esc(t.path)}</dd><div class="chips">${t.st.map(stateChip).join('')}</div></div>
+    <div class="full"><dt>价值 × 风险</dt><dd>${esc(t.val)}</dd></div>
+    <div class="good"><dt>最有效</dt><dd>${esc(t.best)}</dd></div>
+    <div class="bad"><dt>最忌讳</dt><dd>${esc(t.bad)}</dd></div>
+   </dl>`;
+  highlight();
+}
+
+/* state pickers (path view + help view) */
+const phaseHTML = attr => PH.map(p=>`<div class="phase"><div class="ph-t">${p.t}</div><div class="ph-w">${p.w}</div><div class="list">${p.ids.map(id=>`<button type="button" class="sbtn" ${attr}="${id}" aria-pressed="false"><span class="code">${id}</span><span>${S[id].n}</span><i class="dot ${S[id].r}" aria-label="流失风险${lvlText[S[id].r]}"></i></button>`).join('')}</div></div>`).join('');
+$('pathPhases').innerHTML = phaseHTML('data-pick-path');
+$('helpPhases').innerHTML = phaseHTML('data-pick-help');
+function highlight(){
+  const set = new Set(TYPES[curType].st);
+  document.querySelectorAll('[data-pick-path]').forEach(b=>b.classList.toggle('hl', set.has(b.dataset.pickPath) && b.dataset.pickPath!==curPath));
+}
+function renderPath(id){
+  curPath=id; const s=S[id];
+  document.querySelectorAll('[data-pick-path]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pickPath===id));
+  highlight();
+  $('pathDetail').innerHTML = `
+   <div class="d-head"><span class="code">${id}</span><h4>${s.n}</h4><span class="pill ${churnCls(s.c)}">流失 ${esc(s.c)}</span><span class="pill ${spreadCls(s.s)}">传播 ${esc(s.s)}</span></div>
+   <dl class="d-grid">
+    <div class="full"><dt>触发评估</dt><dd class="quote">"${esc(s.ap)}"</dd></div>
+    <div><dt>主导情绪</dt><dd>${esc(s.em)}</dd></div>
+    <div><dt>行动倾向 · 时长 ${esc(s.dur)}</dt><dd>${esc(s.act)}</dd></div>
+    <div><dt>通向</dt><dd>${linkIds(s.nx)}</dd></div>
+    <div><dt>高发原型</dt><dd><div class="chips">${s.ar.map(typeChip).join('')}</div></dd></div>
+    <div class="full"><div class="chips"><button type="button" class="chip go" data-help="${id}">看这个状态怎么帮 →</button></div></div>
+   </dl>`;
+}
+function cell(label,v){ return `<div><b>${label}</b>${v?evs(v):'<span class="none">不适用</span>'}</div>`; }
+function renderHelp(id){
+  curHelp=id; const s=S[id];
+  document.querySelectorAll('[data-pick-help]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pickHelp===id));
+  $('helpDetail').innerHTML = `
+   <div class="d-head"><span class="code">${id}</span><h4>${s.n}</h4><span class="says">"${esc(s.ap)}"</span></div>
+   <dl class="helpfoot"><dt>识别信号</dt><dd>${esc(s.sig)}</dd></dl>
+   <div class="helpgrid">${cell('情绪按摩',s.h.emo)}${cell('物质帮助',s.h.mat)}${cell('技术 / 策略',s.h.tech)}${cell('隔离 / 结构',s.h.iso)}</div>
+   <dl class="helpfoot"><dt>时机</dt><dd>${esc(s.h.when)}</dd><dt>反作用</dt><dd class="x">${esc(s.h.bad)}</dd></dl>`;
+}
+
+/* alliance */
+$('aFlow').innerHTML = ACOLS.map(c=>`<div class="acol"><div class="ah">${c.h}</div>${c.ids.map(id=>`<button type="button" class="abtn ${A[id].r}" data-pick-ally="${id}" aria-pressed="false"><span class="code">${id}</span><b>${A[id].n}</b><small>→ ${esc(A[id].nx)}</small></button>`).join('')}</div>`).join('');
+function renderAlly(id){
+  curAlly=id; const a=A[id];
+  document.querySelectorAll('[data-pick-ally]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pickAlly===id));
+  $('aDetail').innerHTML = `
+   <div class="d-head"><span class="code">${id}</span><h4>${a.n}</h4><span class="pill ${churnCls(a.c)}">流失 ${esc(a.c)}</span><span class="pill ${spreadCls(a.s)}">传播 ${esc(a.s)}</span></div>
+   <dl class="d-grid">
+    <div class="full"><dt>定义</dt><dd>${esc(a.def)}</dd></div>
+    <div><dt>判定（示例阈值 · C）</dt><dd>${esc(a.j)}</dd></div>
+    <div><dt>先兆</dt><dd>${linkIds(a.pre)}</dd></div>
+    <div><dt>成员的个人状态</dt><dd><div class="chips">${a.d.map(stateChip).join('')}</div></dd></div>
+    <div><dt>通向</dt><dd>${linkIds(a.nx)}</dd></div>
+   </dl>`;
+}
+
+/* static tables */
+$('signalRows').innerHTML = PH.flatMap(p=>p.ids).map(id=>{const s=S[id];return `<tr><td class="nw"><span class="code">${id}</span> ${s.n}</td><td>${esc(s.sig)}</td><td>${esc(s.say)}</td><td class="nw"><span class="pill ${churnCls(s.c)}">${esc(s.c.replace(/（.*）/,''))}</span> <span class="pill ${spreadCls(s.s)}">${esc(s.s)}</span></td></tr>`}).join('');
+$('allyHelpRows').innerHTML = Object.keys(A).map(id=>{const a=A[id];return `<tr><td class="nw"><span class="code">${id}</span> ${a.n}</td><td>${esc(a.of)}</td><td>${esc(a.ld)}</td><td>${esc(a.w)}</td><td style="color:var(--hi)">${esc(a.bad)}</td></tr>`}).join('');
+$('indicators').innerHTML = IND.map((r,i)=>`<tr><td class="n">${i+1}</td><td><b>${r[0]}</b></td><td>${esc(r[1])}</td><td>${r[2]}</td></tr>`).join('');
+$('donts').innerHTML = DONT.map((d,i)=>`<div><span class="n">${String(i+1).padStart(2,'0')}</span><span class="t">${esc(d[0])}</span><span class="ev ${d[1].toLowerCase()}">${d[1]}</span></div>`).join('');
+
+/* events */
+const go = el => { const r=el.getBoundingClientRect(); if (r.top<60 || r.top>innerHeight*0.6) el.scrollIntoView({block:'start'}); };
+document.addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  const d = b.dataset;
+  if (d.pickType){ renderType(d.pickType); return; }
+  if (d.pickPath){ renderPath(d.pickPath); return; }
+  if (d.pickHelp){ renderHelp(d.pickHelp); return; }
+  if (d.pickAlly){ renderAlly(d.pickAlly); return; }
+  if (d.help){ renderHelp(d.help); go($('stateHelp')); return; }
+  if (d.state){ renderPath(d.state); go($('statePath')); return; }
+  if (d.type){ renderType(d.type); go($('typePicker').parentElement); return; }
+  if (d.ally){ renderAlly(d.ally); go($('allyPath')); return; }
+});
+
+renderType(curType); renderPath(curPath); renderHelp(curHelp); renderAlly(curAlly);
+})();
+</script>
+</body>
+</html>
